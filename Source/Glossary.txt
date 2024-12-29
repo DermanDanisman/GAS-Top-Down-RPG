@@ -1,0 +1,20 @@
+---GLOSSARY---
+
+Replication: The process of synchronizing game data and state across the server and clients in a multiplayer game to ensure consistency and real-time interactions.
+bReplicates: A boolean property used to mark whether an Actor should replicate its state over the network. If set to true, the Actor's state is synchronized between the server and clients.
+
+ensureMsgf: Notifies the crash reporter and outputs FormattedText to the log on the first time Expression is false
+
+Subsystems: Modular components in Unreal Engine that handle specific game functionality or services. Subsystems provide a way to separate concerns, manage global or player-specific features, 
+and maintain state across different parts of the game. Examples include Game Subsystems, Engine Subsystems, and Local Player Subsystems. Subsystems are singletons. There exists only one for the duration of the program.
+Types of Subsystems:
+
+    Game Subsystem: A subsystem that is intended to exist for the entire duration of the game. It typically handles global systems such as game state management, audio, AI, etc.
+
+    Engine Subsystem: A subsystem that exists as part of the engine and handles engine-level systems. 
+    These subsystems typically manage engine-wide functionality that may be needed across different parts of the game, such as analytics or logging systems.
+
+    Local Player Subsystem: A subsystem that exists for each local player and is tied to the individual player’s game instance. 
+    This is useful for managing player-specific systems, like input, local settings, and player preferences.
+
+    Network Subsystem: A subsystem that exists to handle multiplayer or network-specific functionality, such as managing client-server communication or replication.
