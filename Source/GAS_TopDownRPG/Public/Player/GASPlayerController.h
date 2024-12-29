@@ -8,6 +8,9 @@
 
 /** Forward Declaration */
 class UInputMappingContext;
+class UInputAction;
+struct FInputActionValue;
+
 /**
  * 
  */
@@ -29,4 +32,8 @@ private:
 
 	UPROPERTY(EditAnywhere, Category="Enhanced Input")
 	TObjectPtr<UInputMappingContext> DefaultMappingContext;
+	UPROPERTY(EditAnywhere, Category="Enhanced Input")
+	TObjectPtr<UInputAction> MoveAction;
+	
+	void Move(const FInputActionValue& InputActionValue);
 };
