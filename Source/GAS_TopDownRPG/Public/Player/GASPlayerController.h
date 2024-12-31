@@ -9,6 +9,7 @@
 /** Forward Declaration */
 class UInputMappingContext;
 class UInputAction;
+class IHighlightableInterface;
 struct FInputActionValue;
 
 /**
@@ -22,6 +23,7 @@ class GAS_TOPDOWNRPG_API AGASPlayerController : public APlayerController
 public:
 
 	AGASPlayerController();
+	virtual void PlayerTick(float DeltaTime) override;
 
 protected:
 
@@ -30,12 +32,19 @@ protected:
 
 private:
 
+	TScriptInterface<IHighlightableInterface> HighlightedLastActor;
+	TScriptInterface<IHighlightableInterface> HighlightedCurrentActor;
+	void CursorTrace();
+
+
+	/** Enhanced Input Functions */
+	void Move(const FInputActionValue& InputActionValue);
+	
 	/** Enhanced Input Variables */
 	UPROPERTY(EditAnywhere, Category="Enhanced Input")
 	TObjectPtr<UInputMappingContext> DefaultMappingContext;
 	UPROPERTY(EditAnywhere, Category="Enhanced Input")
 	TObjectPtr<UInputAction> MoveAction;
 	
-	/** Enhanced Input Functions */
-	void Move(const FInputActionValue& InputActionValue);
+
 };

@@ -5,10 +5,18 @@
 
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "Interface/HighlightableInterface.h"
 
 AGASPlayerController::AGASPlayerController()
 {
 	bReplicates = true;
+}
+
+void AGASPlayerController::PlayerTick(float DeltaTime)
+{
+	Super::PlayerTick(DeltaTime);
+
+	CursorTrace();
 }
 
 void AGASPlayerController::BeginPlay()
@@ -38,6 +46,28 @@ void AGASPlayerController::SetupInputComponent()
 
 	UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(InputComponent);
 	EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AGASPlayerController::Move);
+}
+
+void AGASPlayerController::CursorTrace()
+{
+	FHitResult CursorHit;
+	GetHitResultUnderCursor(ECollisionChannel::ECC_Visibility, false, CursorHit);
+	if (!CursorHit.bBlockingHit) return;
+
+	HighlightedLastActor = HighlightedCurrentActor;
+	HighlightedCurrentActor = CursorHit.GetActor();
+	
+	if (HighlightedLastActor != HighlightedCurrentActor)
+	{
+		if (HighlightedLastActor)
+		{
+			HighlightedLastActor->UnHighlight();
+		}
+		if (HighlightedCurrentActor)
+		{
+			HighlightedCurrentActor->Highlight();
+		}
+	}
 }
 
 void AGASPlayerController::Move(const FInputActionValue& InputActionValue)

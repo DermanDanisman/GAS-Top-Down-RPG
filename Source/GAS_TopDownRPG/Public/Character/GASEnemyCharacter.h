@@ -16,8 +16,10 @@ class GAS_TOPDOWNRPG_API AGASEnemyCharacter : public AGASCharacterBase, public I
 	GENERATED_BODY()
 
 public:
+	AGASEnemyCharacter();
 	
 	/** Highlightable Interface */
-	virtual void Highlight(bool bIsHighlighted) override;
-	virtual void UnHighlight(bool bIsHighlighted) override;
+	virtual void Highlight() override;
+	virtual void UnHighlight() override;
+	bool bHighlighted = false;
 };
