@@ -30,10 +30,12 @@ protected:
 
 private:
 
+	/** Enhanced Input Variables */
 	UPROPERTY(EditAnywhere, Category="Enhanced Input")
 	TObjectPtr<UInputMappingContext> DefaultMappingContext;
 	UPROPERTY(EditAnywhere, Category="Enhanced Input")
 	TObjectPtr<UInputAction> MoveAction;
 	
+	/** Enhanced Input Functions */
 	void Move(const FInputActionValue& InputActionValue);
 };

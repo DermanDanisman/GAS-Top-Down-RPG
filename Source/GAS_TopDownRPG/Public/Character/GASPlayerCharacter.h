@@ -6,6 +6,10 @@
 #include "Character/GASCharacterBase.h"
 #include "GASPlayerCharacter.generated.h"
 
+/** Forward Declaration */
+class UCameraComponent;
+class USpringArmComponent;
+
 /**
  * 
  */
@@ -13,5 +17,18 @@ UCLASS()
 class GAS_TOPDOWNRPG_API AGASPlayerCharacter : public AGASCharacterBase
 {
 	GENERATED_BODY()
-	
+
+public:
+	AGASPlayerCharacter();
+
+protected:
+	virtual void BeginPlay() override;
+
+private:
+
+	/** Camera Components */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<USpringArmComponent> SpringArmComponent;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UCameraComponent> CameraComponent;
 };
