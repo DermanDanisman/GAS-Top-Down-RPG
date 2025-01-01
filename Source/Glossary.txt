@@ -18,3 +18,8 @@ Types of Subsystems:
     This is useful for managing player-specific systems, like input, local settings, and player preferences.
 
     Network Subsystem: A subsystem that exists to handle multiplayer or network-specific functionality, such as managing client-server communication or replication.
+    
+NetUpdateFrequency: In a multiplayer game, replicated actors (such as player characters, NPCs, or any other objects that need to be synchronized between the server and clients) 
+send updates about their state (position, rotation, animation, etc.) over the network. This ensures that all players have an accurate representation of the game world.
+NetUpdateFrequency controls the rate at which these updates are sent for a given actor. 
+By adjusting this value, you can optimize network performance by controlling how frequently actors need to send their updates.
