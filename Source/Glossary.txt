@@ -23,3 +23,8 @@ NetUpdateFrequency: In a multiplayer game, replicated actors (such as player cha
 send updates about their state (position, rotation, animation, etc.) over the network. This ensures that all players have an accurate representation of the game world.
 NetUpdateFrequency controls the rate at which these updates are sent for a given actor. 
 By adjusting this value, you can optimize network performance by controlling how frequently actors need to send their updates.
+
+Replication Mode: 
+Full: Use Case -> Single Player / Description -> Gameplay Effects are replicated to all clients
+Mixed: Use Case -> Multiplayer, Player Controlled / Description-> Gameplay Effects are replicated to the owning client only. Gameplay Cues and Gameplay Tags are replicated to all clients.
+Minimal: Use Case -> Multiplayer, AI Controlled / Description-> Gameplay Effects are NOT replicated. Gameplay Cues and Gameplay Tags are replicated to all clients.

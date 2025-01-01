@@ -7,6 +7,8 @@
 #include "Interface/HighlightableInterface.h"
 #include "GASEnemyCharacter.generated.h"
 
+/** Forward Declaration */
+class UGAS_ManagerComponent;
 /**
  * 
  */
@@ -22,4 +24,10 @@ public:
 	virtual void Highlight() override;
 	virtual void UnHighlight() override;
 	bool bHighlighted = false;
+
+private:
+
+	//** GAS Plugin **//
+	UPROPERTY(VisibleAnywhere, Category="GAS Plugin")
+	TObjectPtr<UGAS_ManagerComponent> GASManagerComponent;
 };

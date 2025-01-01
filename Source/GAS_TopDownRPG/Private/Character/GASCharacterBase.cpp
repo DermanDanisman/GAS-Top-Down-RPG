@@ -3,7 +3,6 @@
 
 #include "Character/GASCharacterBase.h"
 
-#include "Preferences/PersonaOptions.h"
 
 // Sets default values
 AGASCharacterBase::AGASCharacterBase()
@@ -14,6 +13,16 @@ AGASCharacterBase::AGASCharacterBase()
 	WeaponMesh = CreateDefaultSubobject<USkeletalMeshComponent>("WeaponMesh");
 	WeaponMesh->SetupAttachment(GetMesh(), FName("WeaponHandSocket"));
 	WeaponMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+}
+
+UAbilitySystemComponent* AGASCharacterBase::GetAbilitySystemComponent() const
+{
+	return AbilitySystemComponent;
+}
+
+UAttributeSet* AGASCharacterBase::GetAttributeSet() const
+{
+	return AttributeSet;
 }
 
 // Called when the game starts or when spawned
