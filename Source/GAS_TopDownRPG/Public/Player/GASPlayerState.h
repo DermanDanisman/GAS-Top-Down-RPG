@@ -7,9 +7,11 @@
 #include "GameFramework/PlayerState.h"
 #include "GASPlayerState.generated.h"
 
+
 /** Forward Declaration */
 class UAttributeSet;
 class UAbilitySystemComponent;
+class UGAS_ManagerComponent;
 
 /**
  * 

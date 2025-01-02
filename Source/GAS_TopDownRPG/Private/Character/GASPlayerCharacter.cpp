@@ -60,5 +60,4 @@ void AGASPlayerCharacter::InitAbilityActorInfo()
 	GASPlayerState->GetAbilitySystemComponent()->InitAbilityActorInfo(GASPlayerState, this);
 	AbilitySystemComponent = GASPlayerState->GetAbilitySystemComponent();
 	AttributeSet = GASPlayerState->GetAttributeSet();
-
 }

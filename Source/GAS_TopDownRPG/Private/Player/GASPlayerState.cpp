@@ -5,7 +5,6 @@
 
 #include "AbilitySystem/GASAbilitySystemComponent.h"
 #include "AbilitySystem/GASAttributeSet.h"
-#include "AbilitySystem/GAS_ManagerComponent.h"
 
 AGASPlayerState::AGASPlayerState()
 {

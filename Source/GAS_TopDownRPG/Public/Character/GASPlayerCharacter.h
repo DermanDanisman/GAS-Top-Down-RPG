@@ -9,6 +9,7 @@
 /** Forward Declaration */
 class UCameraComponent;
 class USpringArmComponent;
+class UGAS_ManagerComponent;
 
 /**
  * 
