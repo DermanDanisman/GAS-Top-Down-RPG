@@ -3,9 +3,11 @@
 
 #include "Character/GASPlayerCharacter.h"
 
+#include "AbilitySystem/GAS_ManagerComponent.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Player/GASPlayerState.h"
 
 AGASPlayerCharacter::AGASPlayerCharacter()
 {
@@ -26,6 +28,26 @@ AGASPlayerCharacter::AGASPlayerCharacter()
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationRoll = false;
 	bUseControllerRotationYaw = false;
+}
+
+void AGASPlayerCharacter::PossessedBy(AController* NewController)
+{
+	Super::PossessedBy(NewController);
+
+	// InitAbilityActorInfo for the server
+	AGASPlayerState* GASPlayerState = GetPlayerState<AGASPlayerState>();
+	ensureMsgf(GASPlayerState, TEXT("GASPlayerState is null in PossessedBy!"));
+	GASPlayerState->GetAbilitySystemComponent()->InitAbilityActorInfo(GASPlayerState, this);
+
+	/** GAS Plugin **/
+	GASPlayerState->GASManagerComponent->InitAbilityActorInfo();;
+	AbilitySystemComponent = GASPlayerState->GASManagerComponent->GetAbilitySystemComponent();
+	AttributeSet = GASPlayerState->GASManagerComponent->GetAttributeSet();
+}
+
+void AGASPlayerCharacter::OnRep_PlayerState()
+{
+	Super::OnRep_PlayerState();
 }
 
 void AGASPlayerCharacter::BeginPlay()

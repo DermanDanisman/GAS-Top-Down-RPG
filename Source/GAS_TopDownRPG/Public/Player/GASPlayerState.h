@@ -26,13 +26,13 @@ public:
 	/** IAbilitySystemInterface */
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	UAttributeSet* GetAttributeSet() const;
-
-protected:
-
+	
 	//** GAS Plugin **//
 	UPROPERTY(VisibleAnywhere, Category="GAS Plugin")
 	TObjectPtr<UGAS_ManagerComponent> GASManagerComponent;
 
+protected:
+	
 	UPROPERTY()
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
 	UPROPERTY()

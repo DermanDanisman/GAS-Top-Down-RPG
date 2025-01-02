@@ -25,6 +25,8 @@ public:
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	UAttributeSet* GetAttributeSet() const;
 
+	void InitAbilityActorInfo();
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
@@ -34,8 +36,11 @@ private:
 	UPROPERTY(EditAnywhere, Category = "GAS Plugin | Replication Mode")
 	EGameplayEffectReplicationMode ReplicationMode = EGameplayEffectReplicationMode::Minimal;
 
-	UPROPERTY()
+	UPROPERTY(EditAnywhere, Category="GAS Plugin | Player State")
+	TSubclassOf<APlayerState> OwnerPlayerState;
+
+	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UAttributeSet> AttributeSet;
 };

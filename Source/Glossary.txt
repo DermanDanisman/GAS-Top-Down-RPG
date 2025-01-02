@@ -28,3 +28,34 @@ Replication Mode:
 Full: Use Case -> Single Player / Description -> Gameplay Effects are replicated to all clients
 Mixed: Use Case -> Multiplayer, Player Controlled / Description-> Gameplay Effects are replicated to the owning client only. Gameplay Cues and Gameplay Tags are replicated to all clients.
 Minimal: Use Case -> Multiplayer, AI Controlled / Description-> Gameplay Effects are NOT replicated. Gameplay Cues and Gameplay Tags are replicated to all clients.
+
+Ability Actor Info:
+Main Properties of FAbilityActorInfo:
+Here are the key properties that FAbilityActorInfo provides:
+    AbilitySystemComponent:
+        A reference to the Ability System Component (ASC) associated with the actor.
+        This is where the actor’s abilities, attributes, and other GAS-related data are stored.
+
+    AvatarActor:
+        The actor that the ability is associated with (usually the player character or NPC).
+        This is important because the ability may apply effects, damage, or buffs to this avatar.
+
+    OwnerActor:
+        This refers to the actor that owns the Ability System Component (often the same as the AvatarActor).
+        It is the owner of the Ability System and may be different in cases where abilities are used on other actors (e.g., when one character casts a spell on another).
+
+    AbilityTags:
+        A set of tags that describe the abilities currently available or active on the actor.
+        Ability tags are often used to determine the state of an ability or to check if an ability can be executed.
+
+    AttributeSet:
+        The Attribute Set associated with the actor (such as health, stamina, or mana).
+        This is used to retrieve or modify the actor’s stats during gameplay.
+
+    AbilityActorInfo Initialization:
+        The FAbilityActorInfo is typically initialized when the ability is activated, usually by calling InitAbilityActorInfo() on the Ability System Component.
+        This function initializes the actor info with the necessary references to the actor’s components, attributes, and other relevant data.
+        
+InitAbilityActorInfo can be called in PossessedBy and AcknowledgePossession if the Ability System Component is initialized in the Player Pawn itself. 
+However, if the Ability System Component is not initialized in the Player Pawn, but the Player State, then InitAbilityActorInfo can be called in PossessedBy and OnRep_PlayerState in the Player Pawn.
+For AI Controlled characters or NPCs, InitAbilityActorInfo can be called in BeginPlay().

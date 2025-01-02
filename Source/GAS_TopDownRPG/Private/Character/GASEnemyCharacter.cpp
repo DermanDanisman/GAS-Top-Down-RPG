@@ -41,3 +41,13 @@ void AGASEnemyCharacter::UnHighlight()
 	GetMesh()->SetRenderCustomDepth(false);
 	WeaponMesh->SetRenderCustomDepth(false);
 }
+
+void AGASEnemyCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+
+	ensureMsgf(AbilitySystemComponent, TEXT("AbilitySystemComponent is null in GAS Enemy Character!"));
+	AbilitySystemComponent->InitAbilityActorInfo(this, this);
+	//** GAS Plugin **//
+	GASManagerComponent->InitAbilityActorInfo();
+}

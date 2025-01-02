@@ -24,10 +24,16 @@ public:
 	virtual void Highlight() override;
 	virtual void UnHighlight() override;
 	bool bHighlighted = false;
+	/** end Highlightable Interface */
 
+protected:
+
+	virtual void BeginPlay() override;
+	
 private:
 
 	//** GAS Plugin **//
 	UPROPERTY(VisibleAnywhere, Category="GAS Plugin")
 	TObjectPtr<UGAS_ManagerComponent> GASManagerComponent;
+	//** end GAS Plugin **//
 };

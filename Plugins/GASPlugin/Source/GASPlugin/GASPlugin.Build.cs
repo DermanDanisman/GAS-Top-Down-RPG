@@ -39,7 +39,7 @@ public class GASPlugin : ModuleRules
 				"Slate",
 				"SlateCore",
 				"GameplayTags",
-				"GameplayTasks",
+				"GameplayTasks", "AIModule",
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);
