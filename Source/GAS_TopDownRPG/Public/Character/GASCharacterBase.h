@@ -31,8 +31,8 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	TObjectPtr<USkeletalMeshComponent> WeaponMesh;
 
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere, Category = "Ability System")
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere, Category = "Ability System")
 	TObjectPtr<UAttributeSet> AttributeSet;
 };

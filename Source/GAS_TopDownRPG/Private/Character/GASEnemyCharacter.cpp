@@ -46,8 +46,7 @@ void AGASEnemyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
+	// Initialize the Ability Actor Info
 	ensureMsgf(AbilitySystemComponent, TEXT("AbilitySystemComponent is null in GAS Enemy Character!"));
 	AbilitySystemComponent->InitAbilityActorInfo(this, this);
-	//** GAS Plugin **//
-	GASManagerComponent->InitAbilityActorInfo();
 }

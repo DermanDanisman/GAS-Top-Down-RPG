@@ -3,7 +3,7 @@
 
 #include "Character/GASPlayerCharacter.h"
 
-#include "AbilitySystem/GAS_ManagerComponent.h"
+#include "AbilitySystemComponent.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
@@ -30,27 +30,35 @@ AGASPlayerCharacter::AGASPlayerCharacter()
 	bUseControllerRotationYaw = false;
 }
 
+
 void AGASPlayerCharacter::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
 
-	// InitAbilityActorInfo for the server
-	AGASPlayerState* GASPlayerState = GetPlayerState<AGASPlayerState>();
-	ensureMsgf(GASPlayerState, TEXT("GASPlayerState is null in PossessedBy!"));
-	GASPlayerState->GetAbilitySystemComponent()->InitAbilityActorInfo(GASPlayerState, this);
-
-	/** GAS Plugin **/
-	GASPlayerState->GASManagerComponent->InitAbilityActorInfo();;
-	AbilitySystemComponent = GASPlayerState->GASManagerComponent->GetAbilitySystemComponent();
-	AttributeSet = GASPlayerState->GASManagerComponent->GetAttributeSet();
+	// Init Ability actor info for the Server
+	InitAbilityActorInfo();
 }
 
 void AGASPlayerCharacter::OnRep_PlayerState()
 {
 	Super::OnRep_PlayerState();
+
+	// Init Ability actor info for the Client
+	InitAbilityActorInfo();
 }
 
 void AGASPlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+}
+
+// Initialize the Ability Actor Info
+void AGASPlayerCharacter::InitAbilityActorInfo()
+{
+	AGASPlayerState* GASPlayerState = GetPlayerState<AGASPlayerState>();
+	ensureMsgf(GASPlayerState, TEXT("GASPlayerState is null in PossessedBy!"));
+	GASPlayerState->GetAbilitySystemComponent()->InitAbilityActorInfo(GASPlayerState, this);
+	AbilitySystemComponent = GASPlayerState->GetAbilitySystemComponent();
+	AttributeSet = GASPlayerState->GetAttributeSet();
+
 }

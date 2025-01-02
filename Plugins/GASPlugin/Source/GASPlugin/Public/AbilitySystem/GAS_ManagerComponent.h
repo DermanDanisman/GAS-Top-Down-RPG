@@ -25,6 +25,7 @@ public:
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	UAttributeSet* GetAttributeSet() const;
 
+	UFUNCTION(BlueprintCallable, Category="GAS Plugin")
 	void InitAbilityActorInfo();
 
 protected:

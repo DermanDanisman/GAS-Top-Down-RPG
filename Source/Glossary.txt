@@ -29,6 +29,9 @@ Full: Use Case -> Single Player / Description -> Gameplay Effects are replicated
 Mixed: Use Case -> Multiplayer, Player Controlled / Description-> Gameplay Effects are replicated to the owning client only. Gameplay Cues and Gameplay Tags are replicated to all clients.
 Minimal: Use Case -> Multiplayer, AI Controlled / Description-> Gameplay Effects are NOT replicated. Gameplay Cues and Gameplay Tags are replicated to all clients.
 
+For Mixed Replication Mode: The OwnerActor's Owner must be the Controller. For Pawns, this is set automatically in PossessedBy(). The PlayerState's Owner is automatically set to the Controller. 
+Therefore, if your OwnerActor is not the PlayerState, and you used Mixed Replication Mode, you must call SetOwner() on the OwnerActor to set its owner to the Controller.
+
 Ability Actor Info:
 Main Properties of FAbilityActorInfo:
 Here are the key properties that FAbilityActorInfo provides:

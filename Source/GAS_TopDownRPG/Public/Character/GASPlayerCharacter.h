@@ -20,6 +20,7 @@ class GAS_TOPDOWNRPG_API AGASPlayerCharacter : public AGASCharacterBase
 
 public:
 	AGASPlayerCharacter();
+	void InitAbilityActorInfo();
 	virtual void PossessedBy(AController* NewController) override;
 	virtual void OnRep_PlayerState() override;
 

@@ -10,7 +10,6 @@
 /** Forward Declaration */
 class UAttributeSet;
 class UAbilitySystemComponent;
-class UGAS_ManagerComponent;
 
 /**
  * 
@@ -26,10 +25,6 @@ public:
 	/** IAbilitySystemInterface */
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	UAttributeSet* GetAttributeSet() const;
-	
-	//** GAS Plugin **//
-	UPROPERTY(VisibleAnywhere, Category="GAS Plugin")
-	TObjectPtr<UGAS_ManagerComponent> GASManagerComponent;
 
 protected:
 	

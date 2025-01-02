@@ -11,10 +11,6 @@ AGASPlayerState::AGASPlayerState()
 {
 	SetNetUpdateFrequency(100.f);
 
-	//** GAS Plugin **//
-	GASManagerComponent = CreateDefaultSubobject<UGAS_ManagerComponent>("GASManagerComponent");
-	GASManagerComponent->SetIsReplicated(true);
-
 	AbilitySystemComponent = CreateDefaultSubobject<UGASAbilitySystemComponent>("AbilitySystemComponent");
 	AbilitySystemComponent->SetIsReplicated(true);
 	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Mixed);

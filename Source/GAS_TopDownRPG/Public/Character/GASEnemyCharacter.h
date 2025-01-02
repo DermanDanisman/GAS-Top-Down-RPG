@@ -29,11 +29,4 @@ public:
 protected:
 
 	virtual void BeginPlay() override;
-	
-private:
-
-	//** GAS Plugin **//
-	UPROPERTY(VisibleAnywhere, Category="GAS Plugin")
-	TObjectPtr<UGAS_ManagerComponent> GASManagerComponent;
-	//** end GAS Plugin **//
 };
