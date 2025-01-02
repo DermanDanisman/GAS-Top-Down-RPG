@@ -30,6 +30,10 @@ AGASPlayerCharacter::AGASPlayerCharacter()
 	bUseControllerRotationYaw = false;
 }
 
+void AGASPlayerCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+}
 
 void AGASPlayerCharacter::PossessedBy(AController* NewController)
 {
@@ -47,10 +51,6 @@ void AGASPlayerCharacter::OnRep_PlayerState()
 	InitAbilityActorInfo();
 }
 
-void AGASPlayerCharacter::BeginPlay()
-{
-	Super::BeginPlay();
-}
 
 // Initialize the Ability Actor Info
 void AGASPlayerCharacter::InitAbilityActorInfo()
