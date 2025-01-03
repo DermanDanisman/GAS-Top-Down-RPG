@@ -62,3 +62,19 @@ Here are the key properties that FAbilityActorInfo provides:
 InitAbilityActorInfo can be called in PossessedBy and AcknowledgePossession if the Ability System Component is initialized in the Player Pawn itself. 
 However, if the Ability System Component is not initialized in the Player Pawn, but the Player State, then InitAbilityActorInfo can be called in PossessedBy and OnRep_PlayerState in the Player Pawn.
 For AI Controlled characters or NPCs, InitAbilityActorInfo can be called in BeginPlay().
+
+
+Attributes:
+In Gameplay Ability System (GAS), Attributes and Attribute Sets are essential components that manage and represent various character stats, such as health, mana, stamina, damage, and more. These attributes can be modified through gameplay effects and are closely tied to abilities and the overall game mechanics. Attributes have the type FGameplayAttributeData.
+
+FGameplayAttributeData: This is a struct that holds a single value for the attribute (e.g., a float for health).
+ATTRIBUTE_ACCESSORS: This is a macro that generates getter and setter functions for each attribute, making it easier to access and modify them.
+
+Summary:
+Attributes are the core stats (e.g., health, mana, stamina) that directly impact gameplay.
+Attribute Set is a container for the attributes and provides functions to access and modify them.
+Gameplay Abilities interact with these attributes, modifying them through Gameplay Effects.
+Replication ensures that attribute values are consistent across clients in multiplayer games.
+
+
+GetLifetimeReplicatedProps: The GetLifetimeReplicatedProps function allows you to declare which variables in your class should be replicated. It is typically overridden in AActor, ACharacter, or any class that is intended to be replicated in a multiplayer setting.
