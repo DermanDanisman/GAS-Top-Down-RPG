@@ -40,17 +40,16 @@ public:
 
 
 	UFUNCTION()
-	void OnRep_Health(const FGameplayAttributeData& OldHealth) const;
+	void OnRep_HealthChanged(const FGameplayAttributeData& OldHealth) const;
 	UFUNCTION()
-	void OnRep_MaxHealth(const FGameplayAttributeData& OldMaxHealth);
+	void OnRep_MaxHealthChanged(const FGameplayAttributeData& OldMaxHealth);
 	UFUNCTION()
-	void OnRep_Mana(const FGameplayAttributeData& OldMana);
+	void OnRep_ManaChanged(const FGameplayAttributeData& OldMana);
 	UFUNCTION()
-	void OnRep_MaxMana(const FGameplayAttributeData& OldMaxMana);
+	void OnRep_MaxManaChanged(const FGameplayAttributeData& OldMaxMana);
 	
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_HealthChanged, Category = "Vital Attributes")
 	FGameplayAttributeData Health;
-	ATTRIBUTE_ACCESSORS(UGASAttributeSet, Health)
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_MaxHealthChanged, Category = "Vital Attributes")
 	FGameplayAttributeData MaxHealth;
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_ManaChanged, Category = "Vital Attributes")

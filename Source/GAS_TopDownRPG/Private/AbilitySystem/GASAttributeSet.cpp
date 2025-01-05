@@ -21,22 +21,22 @@ void UGASAttributeSet::GetLifetimeReplicatedProps(TArray<class FLifetimeProperty
 	DOREPLIFETIME_CONDITION_NOTIFY(UGASAttributeSet, MaxMana, COND_None, REPNOTIFY_Always);
 }
 
-void UGASAttributeSet::OnRep_Health(const FGameplayAttributeData& OldHealth) const
+void UGASAttributeSet::OnRep_HealthChanged(const FGameplayAttributeData& OldHealth) const
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UGASAttributeSet, Health, OldHealth);
 }
 
-void UGASAttributeSet::OnRep_MaxHealth(const FGameplayAttributeData& OldMaxHealth)
+void UGASAttributeSet::OnRep_MaxHealthChanged(const FGameplayAttributeData& OldMaxHealth)
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UGASAttributeSet, MaxHealth, OldMaxHealth);
 }
 
-void UGASAttributeSet::OnRep_Mana(const FGameplayAttributeData& OldMana)
+void UGASAttributeSet::OnRep_ManaChanged(const FGameplayAttributeData& OldMana)
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UGASAttributeSet, Mana, OldMana);
 }
 
-void UGASAttributeSet::OnRep_MaxMana(const FGameplayAttributeData& OldMaxMana)
+void UGASAttributeSet::OnRep_MaxManaChanged(const FGameplayAttributeData& OldMaxMana)
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UGASAttributeSet, MaxMana, OldMaxMana);
 }
