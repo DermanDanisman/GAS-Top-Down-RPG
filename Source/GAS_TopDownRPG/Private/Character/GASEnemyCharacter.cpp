@@ -42,6 +42,9 @@ void AGASEnemyCharacter::BeginPlay()
 	Super::BeginPlay();
 
 	// Initialize the Ability Actor Info
+	// The Owner of this Ability System Component is this class (AGASEnemyCharacter).
+	// The Avatar actor for this Ability System Component is also this class, meaning the enemy character itself.
+	// The Ability System Component and Ability Actor Component live within this class.
 	ensureMsgf(AbilitySystemComponent, TEXT("AbilitySystemComponent is null in GAS Enemy Character!"));
 	AbilitySystemComponent->InitAbilityActorInfo(this, this);
 }

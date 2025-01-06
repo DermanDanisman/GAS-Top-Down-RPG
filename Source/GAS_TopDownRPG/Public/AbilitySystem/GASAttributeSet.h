@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "AbilitySystemComponent.h"
 #include "AttributeSet.h"
 #include "GASAttributeSet.generated.h"
 
@@ -21,6 +22,16 @@
 	Gameplay Abilities interact with these attributes, modifying them through Gameplay Effects.
 	Replication ensures that attribute values are consistent across clients in multiplayer games.
  */
+
+/**
+* This defines a set of helper functions for accessing and initializing attributes, to avoid having to manually write these functions.
+* It would creates the following functions, for attribute Health
+*
+*	static FGameplayAttribute UMyHealthSet::GetHealthAttribute();
+*	FORCEINLINE float UMyHealthSet::GetHealth() const;
+*	FORCEINLINE void UMyHealthSet::SetHealth(float NewVal);
+*	FORCEINLINE void UMyHealthSet::InitHealth(float NewVal);
+*/
 
 #define ATTRIBUTE_ACCESSORS(ClassName, PropertyName) \
 GAMEPLAYATTRIBUTE_PROPERTY_GETTER(ClassName, PropertyName) \
@@ -50,10 +61,17 @@ public:
 	
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_HealthChanged, Category = "Vital Attributes")
 	FGameplayAttributeData Health;
+	ATTRIBUTE_ACCESSORS(UGASAttributeSet, Health);
+	
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_MaxHealthChanged, Category = "Vital Attributes")
 	FGameplayAttributeData MaxHealth;
+	ATTRIBUTE_ACCESSORS(UGASAttributeSet, MaxHealth);
+	
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_ManaChanged, Category = "Vital Attributes")
 	FGameplayAttributeData Mana;
+	ATTRIBUTE_ACCESSORS(UGASAttributeSet, Mana);
+	
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_MaxManaChanged, Category = "Vital Attributes")
 	FGameplayAttributeData MaxMana;
+	ATTRIBUTE_ACCESSORS(UGASAttributeSet, MaxMana);
 };

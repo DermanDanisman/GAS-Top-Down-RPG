@@ -23,6 +23,7 @@ public:
 	/** IAbilitySystemInterface */
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	UAttributeSet* GetAttributeSet() const;
+	/** end IAbilitySystemInterface */
 
 protected:
 	// Called when the game starts or when spawned
@@ -31,8 +32,10 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	TObjectPtr<USkeletalMeshComponent> WeaponMesh;
 
+	/** Ability System */
 	UPROPERTY(VisibleAnywhere, Category = "Ability System")
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
 	UPROPERTY(VisibleAnywhere, Category = "Ability System")
 	TObjectPtr<UAttributeSet> AttributeSet;
+	/** end Ability System */
 };

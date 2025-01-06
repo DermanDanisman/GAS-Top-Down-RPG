@@ -57,7 +57,12 @@ void AGASPlayerCharacter::InitAbilityActorInfo()
 {
 	AGASPlayerState* GASPlayerState = GetPlayerState<AGASPlayerState>();
 	ensureMsgf(GASPlayerState, TEXT("GASPlayerState is null in PossessedBy!"));
+	// The Owner of the Ability System Component is the Player State. The Avatar actor (this class) is the player character.
+	// The Ability System Component (ASC) and Ability Actor Component are contained within the Player State.
 	GASPlayerState->GetAbilitySystemComponent()->InitAbilityActorInfo(GASPlayerState, this);
+	// Here, we are initializing the pointers for the Ability System Component and Attribute Set.
+	// The Ability System Component is retrieved from the Player State, as it's associated with the player.
+	// The Attribute Set is also fetched from the Player State. 
 	AbilitySystemComponent = GASPlayerState->GetAbilitySystemComponent();
 	AttributeSet = GASPlayerState->GetAttributeSet();
 }
