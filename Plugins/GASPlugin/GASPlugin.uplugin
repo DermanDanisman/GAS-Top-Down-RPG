@@ -3,7 +3,7 @@
 	"Version": 1,
 	"VersionName": "1.0",
 	"FriendlyName": "GASPlugin",
-	"Description": "A plugin for GAS system",
+	"Description": "A plugin for GAS for easy implementation.",
 	"Category": "Other",
 	"CreatedBy": "Heathrow",
 	"CreatedByURL": "",

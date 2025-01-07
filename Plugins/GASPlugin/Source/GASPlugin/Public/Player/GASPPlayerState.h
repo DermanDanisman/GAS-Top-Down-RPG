@@ -9,10 +9,7 @@
 #include "GASPPlayerState.generated.h"
 
 /** Forward Declaration */
-class UGASPAttributeSet;
-class UGASPAbilitySystemComponent;
-class UAttributeSet;
-class UAbilitySystemComponent;
+enum class EGameplayEffectReplicationMode : uint8;
 
 /**
  * 
@@ -23,19 +20,20 @@ class GASPLUGIN_API AGASPPlayerState : public APlayerState, public IAbilitySyste
 	GENERATED_BODY()
 
 public:
+
 	AGASPPlayerState();
 
-	/** IAbilitySystemInterface */
+	/** Ability System Interface */
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
-	UAttributeSet* GetAttributeSet() const;
-
+	virtual UAttributeSet* GetAttributeSetComponent() const;
+	
 protected:
 
+	/** Ability System */
+	UPROPERTY(VisibleAnywhere, Category = "GASP Plugin | Ability System")
+	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
 	UPROPERTY(EditAnywhere, Category = "GASP Plugin | Ability System")
 	EGameplayEffectReplicationMode GameplayEffectReplicationMode = EGameplayEffectReplicationMode::Mixed;
-	
-	UPROPERTY(VisibleAnywhere)
-	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere, Category = "GASP Plugin | Ability System")
 	TObjectPtr<UAttributeSet> AttributeSet;
 };

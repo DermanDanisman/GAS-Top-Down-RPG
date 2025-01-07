@@ -26,8 +26,8 @@ public class GASPlugin : ModuleRules
 			new string[]
 			{
 				"Core",
+				"EnhancedInput", 
 				"GameplayAbilities",
-				"EnhancedInput",
 				// ... add other public dependencies that you statically link with here ...
 			}
 			);
@@ -41,7 +41,7 @@ public class GASPlugin : ModuleRules
 				"Slate",
 				"SlateCore",
 				"GameplayTags", 
-				"GameplayTasks",
+				"GameplayTasks"
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);

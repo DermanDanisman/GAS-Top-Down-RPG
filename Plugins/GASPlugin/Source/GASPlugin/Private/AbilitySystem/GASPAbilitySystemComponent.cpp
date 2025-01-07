@@ -3,3 +3,7 @@
 
 #include "AbilitySystem/GASPAbilitySystemComponent.h"
 
+UGASPAbilitySystemComponent::UGASPAbilitySystemComponent()
+{
+
+}

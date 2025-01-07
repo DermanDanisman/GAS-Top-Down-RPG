@@ -13,5 +13,8 @@ UCLASS()
 class GASPLUGIN_API UGASPAbilitySystemComponent : public UAbilitySystemComponent
 {
 	GENERATED_BODY()
-	
+
+public:
+
+	UGASPAbilitySystemComponent();
 };
