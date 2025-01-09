@@ -7,7 +7,12 @@
 
 UGASPAttributeSet::UGASPAttributeSet()
 {
-	
+	InitHealth(50.f);
+	InitMaxHealth(100.f);
+	InitMana(10.f);
+	InitMaxMana(100.f);
+	InitStamina(25.f);
+	InitMaxStamina(50.f);
 }
 
 void UGASPAttributeSet::GetLifetimeReplicatedProps(TArray<class FLifetimeProperty>& OutLifetimeProps) const
