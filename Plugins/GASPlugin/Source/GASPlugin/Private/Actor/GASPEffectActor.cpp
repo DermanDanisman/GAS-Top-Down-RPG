@@ -30,7 +30,7 @@ void AGASPEffectActor::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// Binding custom functions to sphere components BeginOverlap and EndOverlap delegates.
+	// Bind custom functions to the sphere component's overlap events
 	SphereComponent->OnComponentBeginOverlap.AddDynamic(this, &AGASPEffectActor::OnOverlap);
 	SphereComponent->OnComponentEndOverlap.AddDynamic(this, &AGASPEffectActor::EndOverlap);
 }
