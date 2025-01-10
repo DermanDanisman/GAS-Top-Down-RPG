@@ -16,15 +16,17 @@ class GASPLUGIN_API UGASPUserWidget : public UUserWidget
 
 public:
 
+	// Function to set the Widget Controller
 	UFUNCTION(BlueprintCallable, Category = "GASP Plugin | GASP User Widget")
 	void SetWidgetController(UObject* InWidgetController);
 
+	// A reference to the Widget Controller
 	UPROPERTY(BlueprintReadOnly, Category = "GASP Plugin | GASP User Widget | References")
 	TObjectPtr<UObject> WidgetController;
 
 protected:
 
-	// Will be called when the widget controller is set.
+	// Will be called when the Widget Controller is set
 	UFUNCTION(BlueprintCallable, Category = "GASP Plugin | GASP User Widget")
 	void WidgetControllerIsSet();
 };
