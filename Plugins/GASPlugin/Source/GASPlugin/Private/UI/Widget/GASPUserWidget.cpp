@@ -8,7 +8,3 @@ void UGASPUserWidget::SetWidgetController(UObject* InWidgetController)
 	WidgetController = InWidgetController;
 	WidgetControllerIsSet();
 }
-
-void UGASPUserWidget::WidgetControllerIsSet()
-{
-}

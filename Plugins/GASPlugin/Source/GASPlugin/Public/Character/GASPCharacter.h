@@ -55,10 +55,14 @@ public:
 	virtual void OnRep_PlayerState() override;
 
 	/** Ability System Interface */
+	// Get the Ability System Component for this character (used for managing abilities, effects, etc.)
 	UFUNCTION(BlueprintCallable, Category="GASP Plugin | Ability System")
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
+	
+	// Get the Attribute Set for this character (holds player attributes like health, mana, etc.)
 	UFUNCTION(BlueprintCallable, Category="GASP Plugin | Ability System")
 	virtual UAttributeSet* GetAttributeSetComponent() const;
+	/** end Ability System Interface */
 
 protected:
 	// Called when the game starts or when spawned
@@ -70,6 +74,7 @@ protected:
 	// Applies movement configuration settings from the MovementConfig structure to the character's movement component.
 	UFUNCTION(BlueprintCallable, Category = "GASP Plugin | Movement Config", meta = (Tooltip = "Applies movement configuration settings from the MovementConfig structure to the character's movement component."))
 	void ApplyMovementConfig();
+	/** end Movement configurations */
 
 	/** Ability System */
 	UPROPERTY(VisibleAnywhere, Category = "GASP Plugin | Ability System")
@@ -81,4 +86,5 @@ protected:
 	// Initializes the Ability System Component and Attribute Set for the character, and configures replication settings for multiplayer.
 	UFUNCTION(BlueprintCallable, Category = "GASP Plugin | Ability System", meta = (Tooltip = "Initializes the Ability System Component and Attribute Set for the character, and configures replication settings for multiplayer."))
 	void InitializeAbilitySystem();
+	/** end Ability System */
 };

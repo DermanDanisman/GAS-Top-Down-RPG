@@ -27,6 +27,6 @@ public:
 protected:
 
 	// Will be called when the Widget Controller is set
-	UFUNCTION(BlueprintCallable, Category = "GASP Plugin | GASP User Widget")
+	UFUNCTION(BlueprintImplementableEvent, Category = "GASP Plugin | GASP User Widget")
 	void WidgetControllerIsSet();
 };
