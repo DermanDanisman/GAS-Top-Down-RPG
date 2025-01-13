@@ -6,6 +6,7 @@
 #include "AbilitySystemComponent.h"
 #include "AbilitySystemInterface.h"
 #include "GameFramework/Character.h"
+#include "Player/GASPPlayerState.h"
 #include "GASPCharacter.generated.h"
 
 /** Forward Declaration */
@@ -53,6 +54,7 @@ public:
 	void InitAbilityActorInfo();
 	virtual void PossessedBy(AController* NewController) override;
 	virtual void OnRep_PlayerState() override;
+	void InitializeMainOverlayWidget(AGASPPlayerState* GASPPlayerState);
 
 	/** Ability System Interface */
 	// Get the Ability System Component for this character (used for managing abilities, effects, etc.)

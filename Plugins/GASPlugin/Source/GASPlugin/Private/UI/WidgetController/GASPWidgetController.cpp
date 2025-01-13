@@ -10,3 +10,8 @@ void UGASPWidgetController::SetWidgetControllerData(const FGASPWidgetControllerD
 	AbilitySystemComponent = InWidgetControllerData.AbilitySystemComponent;
 	AttributeSet = InWidgetControllerData.AttributeSet;
 }
+
+void UGASPWidgetController::BroadcastInitialValues()
+{
+	
+}

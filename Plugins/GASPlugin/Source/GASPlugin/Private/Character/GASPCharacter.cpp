@@ -68,31 +68,8 @@ void AGASPCharacter::InitAbilityActorInfo()
 			AbilitySystemComponent = GASPPlayerState->GetAbilitySystemComponent();
 			AttributeSet = GASPPlayerState->GetAttributeSetComponent();
 
-			// Get the player controller associated with this character.
-			AGASPPlayerController* GASPPlayerController = Cast<AGASPPlayerController>(GetController());
-
-			// We perform a null check here because, in multiplayer scenarios, the player controller may not always be valid.
-			// The player controller is guaranteed to be valid only for the locally controlled character on the client machine.
-			// In a multiplayer setup, the player controller is valid only for the player controlling that specific character.
-			// Other player characters, controlled by different players or the server, will not have valid player controllers
-			// on this client's machine. Hence, we cannot assume that the player controller will always be valid.
-
-			// If the player controller is valid (non-null), continue to initialize the Main Overlay Widget for this character.
-			if (GASPPlayerController)
-			{
-				// Get the HUD associated with the player controller.
-				// Again, we check if the HUD is valid, as the HUD may not be initialized or available in certain conditions.
-				AGASPHUD* GASPHUD = Cast<AGASPHUD>(GASPPlayerController->GetHUD());
-
-				// If the HUD is valid, proceed to initialize the Main Overlay Widget using the provided data.
-				if (GASPHUD)
-				{
-					// Call the InitializeMainOverlayWidget function to set up the main overlay widget for this player.
-					// This function will only be called if both the player controller and the HUD are valid,
-					// ensuring that we are working with valid objects.
-					GASPHUD->InitializeMainOverlayWidget(GASPPlayerController, GASPPlayerState, AbilitySystemComponent, AttributeSet);
-				}
-			}
+			// Initializing a main overlay widget
+			InitializeMainOverlayWidget(GASPPlayerState);
 		}
 	}
 }
@@ -128,5 +105,34 @@ void AGASPCharacter::InitializeAbilitySystem()
 
 	// Create and initialize the Attribute Set for this character
 	AttributeSet = CreateDefaultSubobject<UGASPAttributeSet>("AttributeSet");
+}
+
+void AGASPCharacter::InitializeMainOverlayWidget(AGASPPlayerState* GASPPlayerState)
+{
+	// Get the player controller associated with this character.
+	AGASPPlayerController* GASPPlayerController = Cast<AGASPPlayerController>(GetController());
+
+	// We perform a null check here because, in multiplayer scenarios, the player controller may not always be valid.
+	// The player controller is guaranteed to be valid only for the locally controlled character on the client machine.
+	// In a multiplayer setup, the player controller is valid only for the player controlling that specific character.
+	// Other player characters, controlled by different players or the server, will not have valid player controllers
+	// on this client's machine. Hence, we cannot assume that the player controller will always be valid.
+
+	// If the player controller is valid (non-null), continue to initialize the Main Overlay Widget for this character.
+	if (GASPPlayerController)
+	{
+		// Get the HUD associated with the player controller.
+		// Again, we check if the HUD is valid, as the HUD may not be initialized or available in certain conditions.
+		AGASPHUD* GASPHUD = Cast<AGASPHUD>(GASPPlayerController->GetHUD());
+
+		// If the HUD is valid, proceed to initialize the Main Overlay Widget using the provided data.
+		if (GASPHUD)
+		{
+			// Call the InitializeMainOverlayWidget function to set up the main overlay widget for this player.
+			// This function will only be called if both the player controller and the HUD are valid,
+			// ensuring that we are working with valid objects.
+			GASPHUD->InitializeMainOverlayWidget(GASPPlayerController, GASPPlayerState, AbilitySystemComponent, AttributeSet);
+		}
+	}
 }
 

@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GASPWidgetController.generated.h"
- 
+
 /** Forward Declaration */
 class UAttributeSet;
 class UAbilitySystemComponent;
@@ -46,13 +46,16 @@ class GASPLUGIN_API UGASPWidgetController : public UObject
 public:
 	
 	/**
-	 *Sets the data for the Widget Controller from the provided structure (FGASPWidgetControllerData).
+	 Sets the data for the Widget Controller from the provided structure (FGASPWidgetControllerData).
 	 This function updates the internal references for the PlayerController, PlayerState,
 	 AbilitySystemComponent, and AttributeSet from the provided input data.
 	 It is used to initialize or update the widget controller with the necessary game data
 	 so that the widget controller can access and interact with the player's ability system and attributes.
 	 */
 	void SetWidgetControllerData(const FGASPWidgetControllerData& InWidgetControllerData);
+
+	UFUNCTION(BlueprintCallable, Category = "GASP Plugin | Widget Controller")
+	virtual void BroadcastInitialValues();
 
 protected:
 
