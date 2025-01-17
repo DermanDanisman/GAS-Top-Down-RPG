@@ -15,3 +15,8 @@ void UGASPWidgetController::BroadcastInitialValues()
 {
 	
 }
+
+void UGASPWidgetController::RegisterAttributeChangeCallbacks()
+{
+	
+}

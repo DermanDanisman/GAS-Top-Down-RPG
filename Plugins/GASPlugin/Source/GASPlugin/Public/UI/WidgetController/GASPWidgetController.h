@@ -57,6 +57,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "GASP Plugin | Widget Controller")
 	virtual void BroadcastInitialValues();
 
+	UFUNCTION(BlueprintCallable, Category = "GASP Plugin | Widget Controller")
+	virtual void RegisterAttributeChangeCallbacks();
+
 protected:
 
 	// References to key objects in the GAS system

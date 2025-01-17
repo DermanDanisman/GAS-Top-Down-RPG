@@ -22,6 +22,8 @@ UGASPWidgetController* AGASPHUD::GetMainOverlayWidgetController(
 		// Initialize the WidgetController with the provided data (FGASPWidgetControllerData)
 		MainOverlayWidgetController->SetWidgetControllerData(InWidgetControllerData);
 
+		MainOverlayWidgetController->RegisterAttributeChangeCallbacks();
+
 		// Return the newly created WidgetController
 		return MainOverlayWidgetController;
 	}

@@ -17,3 +17,24 @@ void UMainOverlayWidgetController::BroadcastInitialValues()
 	OnStaminaChanged.Broadcast(GASPAttributeSet->GetStamina());
 	OnMaxStaminaChanged.Broadcast(GASPAttributeSet->GetMaxStamina());
 }
+
+void UMainOverlayWidgetController::RegisterAttributeChangeCallbacks()
+{
+	const UGASPAttributeSet* GASPAttributeSet = Cast<UGASPAttributeSet>(AttributeSet);
+
+	// Bound HealthChanged to GetGameplayAttributeValueChangeDelegate delegate 
+	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(GASPAttributeSet->GetHealthAttribute()).AddUObject(this, &UMainOverlayWidgetController::HealthChanged);
+
+	// Bound MaxHealthChanged to GetGameplayAttributeValueChangeDelegate delegate 
+	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(GASPAttributeSet->GetMaxHealthAttribute()).AddUObject(this, &UMainOverlayWidgetController::MaxHealthChanged);
+}
+
+void UMainOverlayWidgetController::HealthChanged(const FOnAttributeChangeData& Data) const
+{
+	OnHealthChanged.Broadcast(Data.NewValue);
+}
+
+void UMainOverlayWidgetController::MaxHealthChanged(const FOnAttributeChangeData& Data) const
+{
+	OnMaxHealthChanged.Broadcast(Data.NewValue);
+}
