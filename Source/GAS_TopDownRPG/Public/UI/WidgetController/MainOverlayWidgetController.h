@@ -16,7 +16,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMaxStaminaChangedSignature, float
 /**
  * 
  */
-UCLASS()
+UCLASS(BlueprintType, Blueprintable)
 class GAS_TOPDOWNRPG_API UMainOverlayWidgetController : public UGASPWidgetController
 {
 	GENERATED_BODY()
