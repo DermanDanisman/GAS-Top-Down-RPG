@@ -24,10 +24,10 @@ void AGASPEffectActor::BeginPlay()
 	
 }
 
-void AGASPEffectActor::ApplyGameplayEffectToTarget(AActor* InTarget, TSubclassOf<UGameplayEffect> InGameplayEffectClass)
+void AGASPEffectActor::ApplyGameplayEffectToTarget(AActor* InTargetActor, TSubclassOf<UGameplayEffect> InGameplayEffectClass)
 {
 	// Get the AbilitySystemComponent for the target actor
-	UGASPAbilitySystemComponent* TargetAbilitySystemComponent = Cast<UGASPAbilitySystemComponent>(UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(InTarget));
+	UGASPAbilitySystemComponent* TargetAbilitySystemComponent = Cast<UGASPAbilitySystemComponent>(UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(InTargetActor));
 	if (TargetAbilitySystemComponent == nullptr) return;
 	ensureMsgf(InGameplayEffectClass, TEXT("Gameplay Effect Class is not set"));
 

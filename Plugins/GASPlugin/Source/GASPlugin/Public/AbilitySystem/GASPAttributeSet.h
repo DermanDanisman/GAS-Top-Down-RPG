@@ -74,11 +74,11 @@ public:
 	UFUNCTION()
 	void OnRep_StaminaRegenRateChanged(const FGameplayAttributeData& OldStaminaRegenRate) const;
 	
-	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_HealthChanged, Category = "GASP Plugin | Vital Attributes")
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_HealthChanged, Category = "GASP Plugin | Vital Attributes", Meta=(DisplayName="VitalAttributes.Health"))
 	FGameplayAttributeData Health;
 	ATTRIBUTE_ACCESSORS(UGASPAttributeSet, Health);
 	
-	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_MaxHealthChanged, Category = "GASP Plugin | Vital Attributes")
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_MaxHealthChanged, Category = "GASP Plugin | Vital Attributes", Meta=(DisplayName="VitalAttributes.MaxHealth"))
 	FGameplayAttributeData MaxHealth;
 	ATTRIBUTE_ACCESSORS(UGASPAttributeSet, MaxHealth);
 
