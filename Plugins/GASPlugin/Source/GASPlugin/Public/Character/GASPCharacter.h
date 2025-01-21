@@ -51,7 +51,8 @@ class GASPLUGIN_API AGASPCharacter : public ACharacter, public IAbilitySystemInt
 public:
 	// Sets default values for this character's properties
 	AGASPCharacter();
-	void InitAbilityActorInfo();
+	void InitAbilityActorInfoForPlayer();
+	void InitAbilityActorInfoForAI();
 	virtual void PossessedBy(AController* NewController) override;
 	virtual void OnRep_PlayerState() override;
 	void InitializeMainOverlayWidget(AGASPPlayerState* GASPPlayerState);
@@ -90,3 +91,5 @@ protected:
 	void InitializeAbilitySystem();
 	/** end Ability System */
 };
+
+

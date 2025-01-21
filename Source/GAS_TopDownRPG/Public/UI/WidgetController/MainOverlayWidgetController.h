@@ -65,4 +65,10 @@ protected:
 
 	/** Callback when MaxHealth attribute changes */
 	void MaxHealthChanged(const FOnAttributeChangeData& Data) const;
+
+	/** Callback when Health attribute changes */
+	void ManaChanged(const FOnAttributeChangeData& Data) const;
+
+	/** Callback when MaxHealth attribute changes */
+	void MaxManaChanged(const FOnAttributeChangeData& Data) const;
 };

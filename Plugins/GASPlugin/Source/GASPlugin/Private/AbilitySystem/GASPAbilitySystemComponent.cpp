@@ -5,5 +5,5 @@
 
 UGASPAbilitySystemComponent::UGASPAbilitySystemComponent()
 {
-
+	SetIsReplicated(true);
 }

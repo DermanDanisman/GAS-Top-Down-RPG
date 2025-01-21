@@ -11,7 +11,6 @@
 #include "Player/GASPPlayerState.h"
 #include "UI/HUD/GASPHUD.h"
 
-
 // Sets default values
 AGASPCharacter::AGASPCharacter()
 {
@@ -24,53 +23,60 @@ AGASPCharacter::AGASPCharacter()
 void AGASPCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-
-	InitAbilityActorInfo();
+	if (!IsPlayerControlled())
+	{
+		InitAbilityActorInfoForAI();
+	}
 }
 
 void AGASPCharacter::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
-
-	InitAbilityActorInfo();
+	if (IsPlayerControlled())
+	{
+		InitAbilityActorInfoForPlayer();
+	}
 }
 
 void AGASPCharacter::OnRep_PlayerState()
 {
 	Super::OnRep_PlayerState();
-
-	InitAbilityActorInfo();
+	if (IsPlayerControlled())
+	{
+		InitAbilityActorInfoForPlayer();
+	}
 }
 
-void AGASPCharacter::InitAbilityActorInfo()
+void AGASPCharacter::InitAbilityActorInfoForPlayer()
+{
+	// If the character is player-controlled, initialize using the player state
+	AGASPPlayerState* GASPPlayerState = GetPlayerState<AGASPPlayerState>();
+
+	// Ensure the player state is valid before proceeding
+	ensureMsgf(GASPPlayerState, TEXT("GASPPlayerState Is Not Valid!"));
+
+	// If the player state is valid, initialize the ability system and set up related components
+	if (GASPPlayerState)
+	{
+		// Initialize ability actor info using the player state and the current character
+		GASPPlayerState->GetAbilitySystemComponent()->InitAbilityActorInfo(GASPPlayerState, this);
+
+		// Set the ability system component and attribute set from the player state
+		AbilitySystemComponent = GASPPlayerState->GetAbilitySystemComponent();
+		AttributeSet = GASPPlayerState->GetAttributeSetComponent();
+
+		// Initializing a main overlay widget
+		InitializeMainOverlayWidget(GASPPlayerState);
+	}
+}
+
+void AGASPCharacter::InitAbilityActorInfoForAI()
 {
 	// Check if the character is player-controlled
-	if (!IsPlayerControlled())
+	if (AbilitySystemComponent)
 	{
 		// For non-player-controlled characters, initialize the ability actor info using the current character and itself as owner
 		AbilitySystemComponent->InitAbilityActorInfo(this, this);
-	}
-	else
-	{
-		// If the character is player-controlled, initialize using the player state
-		AGASPPlayerState* GASPPlayerState = GetPlayerState<AGASPPlayerState>();
-
-		// Ensure the player state is valid before proceeding
-		ensureMsgf(GASPPlayerState, TEXT("GASPPlayerState Is Not Valid!"));
-
-		// If the player state is valid, initialize the ability system and set up related components
-		if (GASPPlayerState)
-		{
-			// Initialize ability actor info using the player state and the current character
-			GASPPlayerState->GetAbilitySystemComponent()->InitAbilityActorInfo(GASPPlayerState, this);
-
-			// Set the ability system component and attribute set from the player state
-			AbilitySystemComponent = GASPPlayerState->GetAbilitySystemComponent();
-			AttributeSet = GASPPlayerState->GetAttributeSetComponent();
-
-			// Initializing a main overlay widget
-			InitializeMainOverlayWidget(GASPPlayerState);
-		}
 	}
 }
 

@@ -29,6 +29,7 @@ public class GASPlugin : ModuleRules
 				"EnhancedInput", 
 				"GameplayAbilities",
 				"UMG",
+				"AIModule",
 				// ... add other public dependencies that you statically link with here ...
 			}
 			);

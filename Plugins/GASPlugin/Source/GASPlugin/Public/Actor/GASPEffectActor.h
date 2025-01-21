@@ -7,7 +7,8 @@
 #include "GASPEffectActor.generated.h"
 
 /** Forward Declaration */
-class USphereComponent;
+
+class UGameplayEffect;
 
 UCLASS()
 class GASPLUGIN_API AGASPEffectActor : public AActor
@@ -17,30 +18,22 @@ class GASPLUGIN_API AGASPEffectActor : public AActor
 public:	
 	// Sets default values for this actor's properties
 	AGASPEffectActor();
-
-	
-	UFUNCTION(BlueprintCallable, Category = "GASP Plugin | Effect Actor | Sphere Component")
-	virtual void OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
-		int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-
-	UFUNCTION(BlueprintCallable, Category = "GASP Plugin | Effect Actor | Sphere Component")
-	virtual void EndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 	
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	UPROPERTY(EditAnywhere, Category = "GASP Plugin | Applied Effects")
+	TSubclassOf<UGameplayEffect> InstantGameplayEffectClass;
+
+	UFUNCTION(BlueprintCallable, Category = "GASP Plugin | Effect Actor", Meta=(DisplayName="Apply Gameplay Effect To Target"))
+	void ApplyGameplayEffectToTarget(AActor* InTarget, TSubclassOf<UGameplayEffect> InGameplayEffectClass);
+
+protected:
+	
 	/** Default root component for the actor */
 	UPROPERTY(VisibleAnywhere, Category = "GASP Plugin | Effect Actor")
 	TObjectPtr<USceneComponent> DefaultRootComponent;
-
-	/** Static mesh component representing the visual part of the effect actor */
-	UPROPERTY(VisibleAnywhere, Category = "GASP Plugin | Effect Actor")
-	TObjectPtr<UStaticMeshComponent> Mesh;
-
-	/** Sphere component for detecting overlaps with other actors */
-	UPROPERTY(VisibleAnywhere, Category = "GASP Plugin | Effect Actor")
-	TObjectPtr<USphereComponent> SphereComponent;
 
 };

@@ -17,6 +17,8 @@ class GAS_TOPDOWNRPG_API ATDCharacterBase : public AGASPCharacter
 
 public:
 	ATDCharacterBase();
+	virtual void PossessedBy(AController* NewController) override;
+	virtual void OnRep_PlayerState() override;
 
 protected:
 
