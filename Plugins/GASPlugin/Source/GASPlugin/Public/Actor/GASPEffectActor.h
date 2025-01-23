@@ -16,11 +16,11 @@ class UGASPAbilitySystemComponent;
  * Determines when and how the effects will be applied to a target.
  */
 UENUM(BlueprintType)
-enum class EEffectApplicationPolicy : uint8
+enum class EGameplayEffectApplicationPolicy : uint8
 {
-	ApplyOnOverlap,
-	ApplyOnEndOverlap,
-	DoNotApply,
+	ApplyOnOverlap,   // Apply the effect when overlap starts
+	ApplyOnEndOverlap, // Apply the effect when overlap ends
+	DoNotApply, // Do not apply the effect
 };
 
 /**
@@ -28,11 +28,11 @@ enum class EEffectApplicationPolicy : uint8
  * Determines when and how the effects should be removed from a target.
  */
 UENUM(BlueprintType)
-enum class EEffectRemovalPolicy : uint8
+enum class EGameplayEEffectRemovalPolicy : uint8
 {
-	RemoveOnOverlap,
-	RemoveOnEndOverlap,
-	DoNotRemove,
+	RemoveOnOverlap,  // Remove the effect when overlap starts
+	RemoveOnEndOverlap, // Remove the effect when overlap ends
+	DoNotRemove, // Do not remove the effect
 };
 
 /**
@@ -45,13 +45,17 @@ struct FGameplayEffectInfo
 	GENERATED_BODY()
 
 	FGameplayEffectInfo()
-		: ApplicationPolicy(EEffectApplicationPolicy::DoNotApply), RemovalPolicy(EEffectRemovalPolicy::DoNotRemove)
+		: ApplicationPolicy(EGameplayEffectApplicationPolicy::DoNotApply), RemovalPolicy(EGameplayEEffectRemovalPolicy::DoNotRemove),
+		  StackRemovalCount(-1), bDestroyActorOnEffectApplication(false), bDestroyActorOnEffectRemoval(false)
 	{
 	}
 
-	FGameplayEffectInfo(const TSubclassOf<UGameplayEffect>& InEffectClass, const EEffectApplicationPolicy InApplicationPolicy, const EEffectRemovalPolicy InRemovalPolicy)
-		: GameplayEffectClass(InEffectClass), ApplicationPolicy(InApplicationPolicy), RemovalPolicy(InRemovalPolicy)
-	{}
+	FGameplayEffectInfo(const TSubclassOf<UGameplayEffect>& InEffectClass, const EGameplayEffectApplicationPolicy InApplicationPolicy, const EGameplayEEffectRemovalPolicy InRemovalPolicy)
+		: GameplayEffectClass(InEffectClass), ApplicationPolicy(InApplicationPolicy), RemovalPolicy(InRemovalPolicy),
+		  StackRemovalCount(-1), bDestroyActorOnEffectApplication(false), bDestroyActorOnEffectRemoval(false)
+
+	{
+	}
 
 	/** 
 	 * TSubclassOf<UGameplayEffect> allows us to reference a subclass of UGameplayEffect.
@@ -63,11 +67,23 @@ struct FGameplayEffectInfo
 
 	// The policy for how and when the effect is applied
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "GASP Plugin | Applied Effects")
-	EEffectApplicationPolicy ApplicationPolicy;
+	EGameplayEffectApplicationPolicy ApplicationPolicy;
 
 	// The policy for how and when the effect is removed
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "GASP Plugin | Applied Effects")
-	EEffectRemovalPolicy RemovalPolicy;
+	EGameplayEEffectRemovalPolicy RemovalPolicy;
+
+	// -1 means remove all stacks
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category= "Applied Gameplay Effects Properties")
+	int StackRemovalCount;
+
+	// Flag to determine whether to destroy the actor after applying the effect
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "GASP Plugin | Applied Effects | Flags")
+	bool bDestroyActorOnEffectApplication;
+	
+	// Flag to determine whether to destroy the actor after removing the effect
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "GASP Plugin | Applied Effects | Flags")
+	bool bDestroyActorOnEffectRemoval;
 };
 
 /**
@@ -88,10 +104,6 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	// Flag to determine whether to destroy the actor after removing the effect
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "GASP Plugin | Applied Effects")
-	bool bDestroyOnEffectRemoval = false;
-
 	/** 
 	 * Array of gameplay effect data including effect class and policies (application and removal).
 	 * It consolidates all gameplay effects into one list for management.
@@ -111,6 +123,12 @@ protected:
 	 */
 	UFUNCTION(BlueprintCallable, Category = "GASP Plugin | Effect Actor", Meta=(DisplayName="Apply Gameplay Effect To Target"))
 	virtual void ApplyGameplayEffectToTarget(AActor* InTargetActor, const FGameplayEffectInfo& EffectInfo);
+
+	/** 
+	 * Remove the specified gameplay effect from a target actor based on the provided effect info.
+	 */
+	UFUNCTION(BlueprintCallable, Category = "GASP Plugin | Effect Actor", Meta=(DisplayName="Remove Gameplay Effect From Target"))
+	virtual void RemoveGameplayEffectFromTarget(AActor* InTargetActor, const FGameplayEffectInfo& EffectInfo);
 
 	/** 
 	 * Apply effects on overlap based on their application policies (applies to effects defined with ApplyOnOverlap).
