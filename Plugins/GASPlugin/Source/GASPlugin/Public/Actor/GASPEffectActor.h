@@ -40,19 +40,22 @@ enum class EGameplayEEffectRemovalPolicy : uint8
  * It includes the gameplay effect class and its associated application policy.
  */
 USTRUCT(BlueprintType)
-struct FGameplayEffectInfo
+struct FGameplayEffectActorInfo
 {
 	GENERATED_BODY()
 
-	FGameplayEffectInfo()
-		: ApplicationPolicy(EGameplayEffectApplicationPolicy::DoNotApply), RemovalPolicy(EGameplayEEffectRemovalPolicy::DoNotRemove),
-		  StackRemovalCount(-1), bDestroyActorOnEffectApplication(false), bDestroyActorOnEffectRemoval(false)
+	FGameplayEffectActorInfo()
+		: ApplicationPolicy(EGameplayEffectApplicationPolicy::DoNotApply),
+		  RemovalPolicy(EGameplayEEffectRemovalPolicy::DoNotRemove),
+		  StackRemovalCount(-1), EffectActorLevel(1.f), bDestroyActorOnEffectApplication(false),
+		  bDestroyActorOnEffectRemoval(false)
 	{
 	}
 
-	FGameplayEffectInfo(const TSubclassOf<UGameplayEffect>& InEffectClass, const EGameplayEffectApplicationPolicy InApplicationPolicy, const EGameplayEEffectRemovalPolicy InRemovalPolicy)
+	FGameplayEffectActorInfo(const TSubclassOf<UGameplayEffect>& InEffectClass, const EGameplayEffectApplicationPolicy InApplicationPolicy, const EGameplayEEffectRemovalPolicy InRemovalPolicy)
 		: GameplayEffectClass(InEffectClass), ApplicationPolicy(InApplicationPolicy), RemovalPolicy(InRemovalPolicy),
-		  StackRemovalCount(-1), bDestroyActorOnEffectApplication(false), bDestroyActorOnEffectRemoval(false)
+		  StackRemovalCount(-1), EffectActorLevel(1.f), bDestroyActorOnEffectApplication(false),
+		  bDestroyActorOnEffectRemoval(false)
 
 	{
 	}
@@ -74,8 +77,12 @@ struct FGameplayEffectInfo
 	EGameplayEEffectRemovalPolicy RemovalPolicy;
 
 	// How many "stacks" of the effect to remove. -1 means remove all stacks
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category= "Applied Gameplay Effects Properties")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "GASP Plugin | Applied Effects")
 	int StackRemovalCount;
+
+	// The level of the actor that will apply the effect
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "GASP Plugin | Applied Effects")
+	float EffectActorLevel;
 
 	// Flag to determine whether to destroy the actor after applying the effect
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "GASP Plugin | Applied Effects | Flags")
@@ -109,7 +116,7 @@ protected:
 	 * It consolidates all gameplay effects into one list for management.
 	 */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "GASP Plugin | Applied Effects")
-	TArray<FGameplayEffectInfo> GameplayEffects;
+	TArray<FGameplayEffectActorInfo> GameplayEffects;
 
 	/**
 	 * Map of active gameplay effect handles, used to track which effects are applied to which ability system components.
@@ -152,12 +159,12 @@ private:
 	 * Apply the specified gameplay effect to a target actor based on the provided effect info.
 	 * This function handles the application logic for each effect.
 	 */
-	virtual void ApplyGameplayEffectToTarget(AActor* InTargetActor, const FGameplayEffectInfo& EffectInfo);
+	virtual void ApplyGameplayEffectToTarget(AActor* InTargetActor, const FGameplayEffectActorInfo& EffectInfo);
 
 	/** 
 	 * Remove the specified gameplay effect from a target actor based on the provided effect info.
 	 */
-	virtual void RemoveGameplayEffectFromTarget(AActor* InTargetActor, const FGameplayEffectInfo& EffectInfo);
+	virtual void RemoveGameplayEffectFromTarget(AActor* InTargetActor, const FGameplayEffectActorInfo& EffectInfo);
 
 	/**
 	 * HandleEffects is the main helper function now. It handles both applying and removing effects based on a few parameters.

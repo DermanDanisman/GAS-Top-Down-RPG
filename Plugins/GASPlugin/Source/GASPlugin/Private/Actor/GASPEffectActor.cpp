@@ -25,7 +25,7 @@ void AGASPEffectActor::BeginPlay()
 }
 
 // Apply the gameplay effect to the target actor based on its policy
-void AGASPEffectActor::ApplyGameplayEffectToTarget(AActor* InTargetActor, const FGameplayEffectInfo& EffectInfo)
+void AGASPEffectActor::ApplyGameplayEffectToTarget(AActor* InTargetActor, const FGameplayEffectActorInfo& EffectInfo)
 {
 	// Get the AbilitySystemComponent for the target actor
 	UGASPAbilitySystemComponent* TargetAbilitySystemComponent = Cast<UGASPAbilitySystemComponent>(UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(InTargetActor));
@@ -41,7 +41,7 @@ void AGASPEffectActor::ApplyGameplayEffectToTarget(AActor* InTargetActor, const 
 
 	// Create the Gameplay Effect Spec Handle for the given Gameplay Effect Class
 	// The second argument (1.f) is the level or magnitude of the effect (you may want to adjust this)
-	const FGameplayEffectSpecHandle GameplayEffectSpecHandle = TargetAbilitySystemComponent->MakeOutgoingSpec(EffectInfo.GameplayEffectClass, 1.f, GameplayEffectContextHandle);
+	const FGameplayEffectSpecHandle GameplayEffectSpecHandle = TargetAbilitySystemComponent->MakeOutgoingSpec(EffectInfo.GameplayEffectClass, EffectInfo.EffectActorLevel, GameplayEffectContextHandle);
 
 	// Handle ApplyOnOverlap logic (you can check overlap conditions here)
 	// Apply the Gameplay Effect Spec to the target's Ability System Component
@@ -66,7 +66,7 @@ void AGASPEffectActor::ApplyGameplayEffectToTarget(AActor* InTargetActor, const 
 	GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Red, FString::Printf(TEXT("Active Effect Name and Count: %s and %d"), *ClassName, EffectCount));
 }
 
-void AGASPEffectActor::RemoveGameplayEffectFromTarget(AActor* InTargetActor, const FGameplayEffectInfo& EffectInfo)
+void AGASPEffectActor::RemoveGameplayEffectFromTarget(AActor* InTargetActor, const FGameplayEffectActorInfo& EffectInfo)
 {
 	UGASPAbilitySystemComponent* TargetAbilitySystemComponent = Cast<UGASPAbilitySystemComponent>(UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(InTargetActor));
 	if (TargetAbilitySystemComponent == nullptr) return;
@@ -105,7 +105,7 @@ void AGASPEffectActor::RemoveGameplayEffectFromTarget(AActor* InTargetActor, con
 void AGASPEffectActor::HandleEffects(AActor* InTargetActor, bool bApplyEffect, bool bIsEndOverlap)
 {
 	// Iterate through the GameplayEffects array
-	for (const FGameplayEffectInfo& EffectInfo : GameplayEffects)
+	for (const FGameplayEffectActorInfo& EffectInfo : GameplayEffects)
 	{
 		// Check if the action matches the effect's policy (Apply or Remove)
 		if (bApplyEffect)
