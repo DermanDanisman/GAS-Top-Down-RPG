@@ -101,59 +101,55 @@ void AGASPEffectActor::RemoveGameplayEffectFromTarget(AActor* InTargetActor, con
 	GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Green, FString::Printf(TEXT("Active Effect Name and Count: %s and %d"), *ClassName, EffectCount));
 }
 
-// Apply effects when an overlap occurs
-void AGASPEffectActor::ApplyEffectsOnOverlap(AActor* InTargetActor)
+// Apply or Remove effects based on the provided action and policy type
+void AGASPEffectActor::HandleEffects(AActor* InTargetActor, bool bApplyEffect, bool bIsEndOverlap)
 {
 	// Iterate through the GameplayEffects array
 	for (const FGameplayEffectInfo& EffectInfo : GameplayEffects)
 	{
-		// Apply the effect if the policy matches
-		if (EffectInfo.ApplicationPolicy == EGameplayEffectApplicationPolicy::ApplyOnOverlap)
+		// Check if the action matches the effect's policy (Apply or Remove)
+		if (bApplyEffect)
 		{
-			ApplyGameplayEffectToTarget(InTargetActor, EffectInfo);
+			// Apply effects based on the application policy (ApplyOnOverlap or ApplyOnEndOverlap)
+			if ((bIsEndOverlap && EffectInfo.ApplicationPolicy == EGameplayEffectApplicationPolicy::ApplyOnEndOverlap) ||
+				(!bIsEndOverlap && EffectInfo.ApplicationPolicy == EGameplayEffectApplicationPolicy::ApplyOnOverlap))
+			{
+				ApplyGameplayEffectToTarget(InTargetActor, EffectInfo);
+			}
+		}
+		else
+		{
+			// Remove effects based on the removal policy (RemoveOnOverlap or RemoveOnEndOverlap)
+			if ((bIsEndOverlap && EffectInfo.RemovalPolicy == EGameplayEEffectRemovalPolicy::RemoveOnEndOverlap) ||
+				(!bIsEndOverlap && EffectInfo.RemovalPolicy == EGameplayEEffectRemovalPolicy::RemoveOnOverlap))
+			{
+				RemoveGameplayEffectFromTarget(InTargetActor, EffectInfo);
+			}
 		}
 	}
+}
+
+// Apply effects when an overlap occurs
+void AGASPEffectActor::ApplyEffectsOnOverlap(AActor* InTargetActor)
+{
+	HandleEffects(InTargetActor, true, false); // true means applying, false means it's overlap (not end overlap)
 }
 
 // Remove effects when an overlap occurs
 void AGASPEffectActor::RemoveEffectsOnOverlap(AActor* InTargetActor)
 {
-	// Iterate through the GameplayEffects array
-	for (const FGameplayEffectInfo& EffectInfo : GameplayEffects)
-	{
-		// Remove effects based on the removal policy
-		if (EffectInfo.RemovalPolicy == EGameplayEEffectRemovalPolicy::RemoveOnOverlap)
-		{
-			RemoveGameplayEffectFromTarget(InTargetActor, EffectInfo);
-		}
-	}
+	HandleEffects(InTargetActor, false, false); // false means removing, false means it's overlap (not end overlap)
 }
 
 // Apply effects when the overlap ends
 void AGASPEffectActor::ApplyEffectsOnEndOverlap(AActor* InTargetActor)
 {
-	// Iterate through the GameplayEffects array
-	for (const FGameplayEffectInfo& EffectInfo : GameplayEffects)
-	{
-		// Apply the effect if the policy matches
-		if (EffectInfo.ApplicationPolicy == EGameplayEffectApplicationPolicy::ApplyOnEndOverlap)
-		{
-			ApplyGameplayEffectToTarget(InTargetActor, EffectInfo);
-		}
-	}
+	HandleEffects(InTargetActor, true, true); // true means applying, true means it's end overlap
 }
 
 // Remove effects when the overlap ends
 void AGASPEffectActor::RemoveEffectsOnEndOverlap(AActor* InTargetActor)
 {
-	// Iterate through the GameplayEffects array
-	for (const FGameplayEffectInfo& EffectInfo : GameplayEffects)
-	{
-		// Remove effects based on the removal policy
-		if (EffectInfo.RemovalPolicy == EGameplayEEffectRemovalPolicy::RemoveOnEndOverlap)
-		{
-			RemoveGameplayEffectFromTarget(InTargetActor, EffectInfo);
-		}
-	}
+	HandleEffects(InTargetActor, false, true); // false means removing, true means it's end overlap
 }
 

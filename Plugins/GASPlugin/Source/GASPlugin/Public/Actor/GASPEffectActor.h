@@ -62,18 +62,18 @@ struct FGameplayEffectInfo
 	 * This property lets us define the Gameplay Effect that will be applied to targets.
 	 * Set in the editor to specify which effect the actor will apply.
 	 */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "GASP Plugin | Applied Effects")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "GASP Plugin | Applied Effects")
 	TSubclassOf<UGameplayEffect> GameplayEffectClass;
 
 	// The policy for how and when the effect is applied
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "GASP Plugin | Applied Effects")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "GASP Plugin | Applied Effects")
 	EGameplayEffectApplicationPolicy ApplicationPolicy;
 
 	// The policy for how and when the effect is removed
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "GASP Plugin | Applied Effects")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "GASP Plugin | Applied Effects")
 	EGameplayEEffectRemovalPolicy RemovalPolicy;
 
-	// -1 means remove all stacks
+	// How many "stacks" of the effect to remove. -1 means remove all stacks
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category= "Applied Gameplay Effects Properties")
 	int StackRemovalCount;
 
@@ -118,19 +118,6 @@ protected:
 	TMap<FActiveGameplayEffectHandle, UGASPAbilitySystemComponent*> ActiveGameplayEffectHandles;
 
 	/** 
-	 * Apply the specified gameplay effect to a target actor based on the provided effect info.
-	 * This function handles the application logic for each effect.
-	 */
-	UFUNCTION(BlueprintCallable, Category = "GASP Plugin | Effect Actor", Meta=(DisplayName="Apply Gameplay Effect To Target"))
-	virtual void ApplyGameplayEffectToTarget(AActor* InTargetActor, const FGameplayEffectInfo& EffectInfo);
-
-	/** 
-	 * Remove the specified gameplay effect from a target actor based on the provided effect info.
-	 */
-	UFUNCTION(BlueprintCallable, Category = "GASP Plugin | Effect Actor", Meta=(DisplayName="Remove Gameplay Effect From Target"))
-	virtual void RemoveGameplayEffectFromTarget(AActor* InTargetActor, const FGameplayEffectInfo& EffectInfo);
-
-	/** 
 	 * Apply effects on overlap based on their application policies (applies to effects defined with ApplyOnOverlap).
 	 */
 	UFUNCTION(BlueprintCallable, Category = "GASP Plugin | Effect Actor", Meta=(DisplayName="Apply Gameplay Effect On Overlap"))
@@ -154,10 +141,30 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = "GASP Plugin | Effect Actor", Meta=(DisplayName="Remove Gameplay Effect On End Overlap"))
 	virtual void RemoveEffectsOnEndOverlap(AActor* InTargetActor);
 
-protected:
-	
+private:
+
+		
 	/** Default root component for the actor */
 	UPROPERTY(VisibleAnywhere, Category = "GASP Plugin | Effect Actor")
 	TObjectPtr<USceneComponent> DefaultRootComponent;
+
+	/** 
+	 * Apply the specified gameplay effect to a target actor based on the provided effect info.
+	 * This function handles the application logic for each effect.
+	 */
+	virtual void ApplyGameplayEffectToTarget(AActor* InTargetActor, const FGameplayEffectInfo& EffectInfo);
+
+	/** 
+	 * Remove the specified gameplay effect from a target actor based on the provided effect info.
+	 */
+	virtual void RemoveGameplayEffectFromTarget(AActor* InTargetActor, const FGameplayEffectInfo& EffectInfo);
+
+	/**
+	 * HandleEffects is the main helper function now. It handles both applying and removing effects based on a few parameters.
+	 * @param InTargetActor 
+	 * @param bApplyEffect 
+	 * @param bIsEndOverlap 
+	 */
+	virtual void HandleEffects(AActor* InTargetActor, bool bApplyEffect, bool bIsEndOverlap);
 
 };
