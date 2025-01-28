@@ -28,6 +28,7 @@ public class GASPlugin : ModuleRules
 				"Core",
 				"EnhancedInput", 
 				"GameplayAbilities",
+				"GameplayTags",
 				"UMG",
 				"AIModule",
 				// ... add other public dependencies that you statically link with here ...
@@ -42,7 +43,6 @@ public class GASPlugin : ModuleRules
 				"Engine",
 				"Slate",
 				"SlateCore",
-				"GameplayTags", 
 				"GameplayTasks"
 				// ... add private dependencies that you statically link with here ...	
 			}

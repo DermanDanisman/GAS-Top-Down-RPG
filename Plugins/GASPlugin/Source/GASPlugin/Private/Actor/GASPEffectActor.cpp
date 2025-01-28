@@ -102,7 +102,7 @@ void AGASPEffectActor::RemoveGameplayEffectFromTarget(AActor* InTargetActor, con
 }
 
 // Apply or Remove effects based on the provided action and policy type
-void AGASPEffectActor::HandleEffects(AActor* InTargetActor, bool bApplyEffect, bool bIsEndOverlap)
+void AGASPEffectActor::HandleEffects(AActor* InTargetActor, const bool bApplyEffect, const bool bIsEndOverlap)
 {
 	// Iterate through the GameplayEffects array
 	for (const FGameplayEffectActorInfo& EffectInfo : GameplayEffects)
