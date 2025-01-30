@@ -51,8 +51,6 @@ class GASPLUGIN_API AGASPCharacter : public ACharacter, public IAbilitySystemInt
 public:
 	// Sets default values for this character's properties
 	AGASPCharacter();
-	void InitAbilityActorInfoForPlayer();
-	void InitAbilityActorInfoForAI();
 	virtual void PossessedBy(AController* NewController) override;
 	virtual void OnRep_PlayerState() override;
 	void InitializeMainOverlayWidget(AGASPPlayerState* GASPPlayerState);
@@ -70,6 +68,9 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	virtual void InitAbilityActorInfoForPlayer();
+	virtual void InitAbilityActorInfoForAI();
 	
 	/** Movement configurations */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "GASP Plugin | Movement Config", meta = (Tooltip = "Call ApplyMovementConfig() to apply this structure."))

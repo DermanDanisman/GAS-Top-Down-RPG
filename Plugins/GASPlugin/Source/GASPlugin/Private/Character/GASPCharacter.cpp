@@ -60,6 +60,7 @@ void AGASPCharacter::InitAbilityActorInfoForPlayer()
 	{
 		// Initialize ability actor info using the player state and the current character
 		GASPPlayerState->GetAbilitySystemComponent()->InitAbilityActorInfo(GASPPlayerState, this);
+		Cast<UGASPAbilitySystemComponent>(GASPPlayerState->GetAbilitySystemComponent())->AbilityActorInfoIsSet();
 
 		// Set the ability system component and attribute set from the player state
 		AbilitySystemComponent = GASPPlayerState->GetAbilitySystemComponent();
@@ -77,6 +78,7 @@ void AGASPCharacter::InitAbilityActorInfoForAI()
 	{
 		// For non-player-controlled characters, initialize the ability actor info using the current character and itself as owner
 		AbilitySystemComponent->InitAbilityActorInfo(this, this);
+		Cast<UGASPAbilitySystemComponent>(AbilitySystemComponent)->AbilityActorInfoIsSet();
 	}
 }
 
