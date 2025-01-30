@@ -20,6 +20,12 @@ void UMainOverlayWidgetController::BroadcastInitialValues()
 
 void UMainOverlayWidgetController::RegisterAttributeChangeCallbacks()
 {
+	/**
+	 * Super call: Registers a callback function to listen for attribute changes. 
+	 * It uses AddLambda, which is a more flexible and inline way of defining callback functions.
+	 */
+	Super::RegisterAttributeChangeCallbacks();
+	
 	const UGASPAttributeSet* GASPAttributeSet = Cast<UGASPAttributeSet>(AttributeSet);
 
 	// Bound HealthChanged to GetGameplayAttributeValueChangeDelegate delegate 

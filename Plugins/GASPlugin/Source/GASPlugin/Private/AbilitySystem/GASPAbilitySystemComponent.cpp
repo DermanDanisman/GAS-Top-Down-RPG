@@ -17,5 +17,8 @@ void UGASPAbilitySystemComponent::AbilityActorInfoIsSet()
 void UGASPAbilitySystemComponent::GameplayEffectApplied(UAbilitySystemComponent* AbilitySystemComponent,
                                                 const FGameplayEffectSpec& GameplayEffectSpec, FActiveGameplayEffectHandle ActiveGameplayEffectHandle)
 {
-	GEngine->AddOnScreenDebugMessage(1, 8.f, FColor::Blue, FString::Printf(TEXT("Effect Applied")));
+	FGameplayTagContainer GameplayTagContainer;
+	GameplayEffectSpec.GetAllAssetTags(GameplayTagContainer);
+
+	GameplayEffectAssetTags.Broadcast(GameplayTagContainer);
 }

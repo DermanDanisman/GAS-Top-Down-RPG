@@ -9,6 +9,11 @@
 class UAttributeSet;
 class UAbilitySystemComponent;
 
+/**
+ * Struct for holding the data required for the Widget Controller, 
+ * which includes references to player-related objects (PlayerController, PlayerState),
+ * AbilitySystemComponent (for interacting with the player's abilities), and the AttributeSet (player stats).
+ */
 USTRUCT(BlueprintType)
 struct FGASPWidgetControllerData
 {
@@ -19,6 +24,7 @@ struct FGASPWidgetControllerData
 	// Member initializer list
 	: PlayerController(PC), PlayerState(PS), AbilitySystemComponent(ASC), AttributeSet(AS) {}
 
+	// References to player-related objects and components
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "GASP Plugin | Widget Controller | Core Data")
 	TObjectPtr<APlayerController> PlayerController = nullptr;
 
@@ -54,9 +60,12 @@ public:
 	 */
 	void SetWidgetControllerData(const FGASPWidgetControllerData& InWidgetControllerData);
 
+	// This method can be used to broadcast the initial values of the widget
 	UFUNCTION(BlueprintCallable, Category = "GASP Plugin | Widget Controller")
 	virtual void BroadcastInitialValues();
 
+	// This method registers callbacks for attribute change notifications.
+	// It will likely respond to any changes in player's attributes like health, mana, etc.
 	UFUNCTION(BlueprintCallable, Category = "GASP Plugin | Widget Controller")
 	virtual void RegisterAttributeChangeCallbacks();
 

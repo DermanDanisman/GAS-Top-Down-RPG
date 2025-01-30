@@ -6,6 +6,8 @@
 #include "AbilitySystemComponent.h"
 #include "GASPAbilitySystemComponent.generated.h"
 
+DECLARE_MULTICAST_DELEGATE_OneParam(FGameplayEffectTags, const FGameplayTagContainer& /*AssetTags*/)
+
 /**
  * 
  */
@@ -22,6 +24,8 @@ public:
 	 * Function to bind the callback function to the GameplayEffectApplied event
 	 */
 	void AbilityActorInfoIsSet();
+
+	FGameplayEffectTags GameplayEffectAssetTags;
 
 protected:
 
