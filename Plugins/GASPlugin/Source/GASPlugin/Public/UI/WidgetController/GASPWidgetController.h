@@ -3,11 +3,21 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GameplayTagContainer.h"
 #include "GASPWidgetController.generated.h"
 
 /** Forward Declaration */
 class UAttributeSet;
 class UAbilitySystemComponent;
+
+
+USTRUCT(BlueprintType)
+struct FUIWidgetRow : public FTableRowBase
+{
+	GENERATED_BODY()
+
+	FGameplayTag GameplayTag;
+};
 
 /**
  * Struct for holding the data required for the Widget Controller, 
