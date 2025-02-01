@@ -25,7 +25,7 @@ struct FUIMessageWidgetRow : public FTableRowBase
 
 	// Gameplay tag for the message in this row, used for categorization or specific conditions (e.g., health, mana, etc.)
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "GASP Plugin | Widget Controller | UI Widget Row")
-	FGameplayTag MessageGameplayTag;
+	FGameplayTag MessageGameplayTag = FGameplayTag();
 
 	// The text of the message displayed in the widget (e.g., "Health Low")
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "GASP Plugin | Widget Controller | UI Widget Row")
@@ -39,6 +39,8 @@ struct FUIMessageWidgetRow : public FTableRowBase
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "GASP Plugin | Widget Controller | UI Widget Row")
 	UTexture2D* Image = nullptr;
 };
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FMessageWidgetRowSignature, FUIMessageWidgetRow, MessageWidgetRow);
 
 /**
  * Struct for holding the data required for the Widget Controller, 
@@ -99,6 +101,11 @@ public:
 	// It will likely respond to any changes in player's attributes like health, mana, etc.
 	UFUNCTION(BlueprintCallable, Category = "GASP Plugin | Widget Controller")
 	virtual void RegisterAttributeChangeCallbacks();
+
+public:
+
+	UPROPERTY(BlueprintAssignable, Category = "GASP Plugin | Widget Controller | Delegates")
+	FMessageWidgetRowSignature MessageWidgetRowDelegate;
 
 protected:
 

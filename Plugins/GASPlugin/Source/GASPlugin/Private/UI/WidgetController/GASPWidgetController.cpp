@@ -54,7 +54,18 @@ void UGASPWidgetController::RegisterAttributeChangeCallbacks()
 		{
 			//TODO: Broadcast the tag to the widget controller.
 			GEngine->AddOnScreenDebugMessage(-1, 8.f, FColor::Blue, FString::Printf(TEXT("Effect Applied Tag: %s"), *GameplayTag.GetTagName().ToString()));
-			FUIMessageWidgetRow* Row = GetDataTableRowByTag<FUIMessageWidgetRow>(MessageWidgetDataTable, GameplayTag);
+
+			// "Message.HealthPotion".MatchesTag("Message") will return True, "Message".MatchesTag("Message.HealthPotion") will return False
+			FGameplayTag MessageTag = FGameplayTag::RequestGameplayTag(FName("GASP.Message"));
+			if (GameplayTag.MatchesTag(MessageTag))
+			{
+				ensureMsgf(MessageWidgetDataTable, TEXT("MessageWidgetDataTable is not set!"));
+				if (MessageWidgetDataTable)
+				{
+					const FUIMessageWidgetRow* Row = GetDataTableRowByTag<FUIMessageWidgetRow>(MessageWidgetDataTable, GameplayTag);
+					MessageWidgetRowDelegate.Broadcast(*Row);
+				}
+			}
 		}
 	}
 );
