@@ -46,7 +46,7 @@ void UGASPWidgetController::RegisterAttributeChangeCallbacks()
 	 * So if you want to call a member function in a lambda, you have to capture that object of the class that that function belongs to.
 	 */
 	Cast<UGASPAbilitySystemComponent>(AbilitySystemComponent)->GameplayEffectAssetTags.AddLambda(
-	[](const FGameplayTagContainer& AssetTags)
+	[this](const FGameplayTagContainer& AssetTags)
 	{
 		// Process each gameplay tag here and broadcast it to the widget
 		// This would be useful for updating the UI based on certain tags from gameplay effects
@@ -54,6 +54,7 @@ void UGASPWidgetController::RegisterAttributeChangeCallbacks()
 		{
 			//TODO: Broadcast the tag to the widget controller.
 			GEngine->AddOnScreenDebugMessage(-1, 8.f, FColor::Blue, FString::Printf(TEXT("Effect Applied Tag: %s"), *GameplayTag.GetTagName().ToString()));
+			FUIMessageWidgetRow* Row = GetDataTableRowByTag<FUIMessageWidgetRow>(MessageWidgetDataTable, GameplayTag);
 		}
 	}
 );
