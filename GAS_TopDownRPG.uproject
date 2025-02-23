@@ -29,6 +29,10 @@
 		{
 			"Name": "GASAttachEditor",
 			"Enabled": true
+		},
+		{
+			"Name": "CommonUI",
+			"Enabled": true
 		}
 	]
 }

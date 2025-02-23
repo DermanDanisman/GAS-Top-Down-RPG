@@ -31,6 +31,7 @@ public class GASPlugin : ModuleRules
 				"GameplayTags",
 				"UMG",
 				"AIModule",
+				"CommonUI"
 				// ... add other public dependencies that you statically link with here ...
 			}
 			);

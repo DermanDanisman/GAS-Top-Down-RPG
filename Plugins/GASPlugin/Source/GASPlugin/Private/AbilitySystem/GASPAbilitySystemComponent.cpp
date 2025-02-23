@@ -20,5 +20,10 @@ void UGASPAbilitySystemComponent::GameplayEffectApplied(UAbilitySystemComponent*
 	FGameplayTagContainer GameplayTagContainer;
 	GameplayEffectSpec.GetAllAssetTags(GameplayTagContainer);
 
-	GameplayEffectAssetTags.Broadcast(GameplayTagContainer);
+	if (!GameplayTagContainer.IsEmpty())
+	{
+		// Broadcasting the extracted gameplay tags.
+		GameplayEffectAssetTags.Broadcast(GameplayTagContainer);
+	}
+
 }
