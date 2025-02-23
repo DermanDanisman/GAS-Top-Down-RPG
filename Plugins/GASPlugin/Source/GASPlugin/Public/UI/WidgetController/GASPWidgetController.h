@@ -11,6 +11,10 @@
 class UAttributeSet;
 class UAbilitySystemComponent;
 class UGASPUserWidget;
+struct FGameplayAttribute;
+
+//
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAttributeByFloatChangedSignature, float, Health);
 
 /**
  * Struct for defining a single row of UI widget data.
@@ -102,10 +106,29 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "GASP Plugin | Widget Controller")
 	virtual void RegisterAttributeChangeCallbacks();
 
-public:
-
+	void BindAndBroadcastAttributeByFloatChangeDelegate(const FGameplayAttribute& InAttribute, const FOnAttributeByFloatChangedSignature& InOnAttributeByFloatChangedDelegate);
+	
 	UPROPERTY(BlueprintAssignable, Category = "GASP Plugin | Widget Controller | Delegates")
 	FMessageWidgetRowSignature MessageWidgetRowDelegate;
+
+	// Delegates to notify the UI when each attribute changes
+	UPROPERTY(BlueprintAssignable, Category = "GASP Plugin | Widget Controller | Delegates")
+	FOnAttributeByFloatChangedSignature OnHealthChanged;
+
+	UPROPERTY(BlueprintAssignable, Category = "GASP Plugin | Widget Controller | Delegates")
+	FOnAttributeByFloatChangedSignature OnMaxHealthChanged;
+
+	UPROPERTY(BlueprintAssignable, Category = "GASP Plugin | Widget Controller | Delegates")
+	FOnAttributeByFloatChangedSignature OnManaChanged;
+
+	UPROPERTY(BlueprintAssignable, Category = "GASP Plugin | Widget Controller | Delegates")
+	FOnAttributeByFloatChangedSignature OnMaxManaChanged;
+
+	UPROPERTY(BlueprintAssignable, Category = "GASP Plugin | Widget Controller | Delegates")
+	FOnAttributeByFloatChangedSignature OnStaminaChanged;
+
+	UPROPERTY(BlueprintAssignable, Category = "GASP Plugin | Widget Controller | Delegates")
+	FOnAttributeByFloatChangedSignature OnMaxStaminaChanged;
 
 protected:
 
@@ -125,8 +148,7 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly, Category = "GASP Plugin | Widget Controller | Core References")
 	TObjectPtr<UAttributeSet> AttributeSet;
-
-protected:
+	
 
 	/**
 	 * Template functions are a feature in C++ that allow functions to operate with generic types.
@@ -157,5 +179,12 @@ protected:
 template <typename T>
 T* UGASPWidgetController::GetDataTableRowByTag(UDataTable* DataTable, const FGameplayTag& GameplayTag)
 {
-	return DataTable->FindRow<T>(GameplayTag.GetTagName(), TEXT(""));
+	if (!DataTable) return nullptr;
+	T* Row = DataTable->FindRow<T>(GameplayTag.GetTagName(), TEXT(""));
+	if (!Row)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Row not found for tag: %s"), *GameplayTag.ToString());
+	}
+	return Row;
 }
+

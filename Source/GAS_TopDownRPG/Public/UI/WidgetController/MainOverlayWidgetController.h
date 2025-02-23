@@ -7,14 +7,6 @@
 #include "UI/WidgetController/GASPWidgetController.h"
 #include "MainOverlayWidgetController.generated.h"
 
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnHealthChangedSignature, float, Health);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMaxHealthChangedSignature, float, MaxHealth);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnManaChangedSignature, float, Mana);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMaxManaChangedSignature, float, MaxMana);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnStaminaChangedSignature, float, Stamina);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMaxStaminaChangedSignature, float, MaxStamina);
-
 /**
  * UMainOverlayWidgetController is responsible for controlling the overlay UI for the player.
  * It manages broadcasting the initial values for attributes and handling attribute changes.
@@ -38,37 +30,5 @@ public:
 	 * This function will listen for any changes in the player's attributes and trigger UI updates accordingly.
 	 */
 	virtual void RegisterAttributeChangeCallbacks() override;
-
-	// Delegates to notify the UI when each attribute changes
-	UPROPERTY(BlueprintAssignable, Category = "GASP Plugin | Widget Controller | Delegates")
-	FOnHealthChangedSignature OnHealthChanged;
-
-	UPROPERTY(BlueprintAssignable, Category = "GASP Plugin | Widget Controller | Delegates")
-	FOnMaxHealthChangedSignature OnMaxHealthChanged;
-
-	UPROPERTY(BlueprintAssignable, Category = "GASP Plugin | Widget Controller | Delegates")
-	FOnManaChangedSignature OnManaChanged;
-
-	UPROPERTY(BlueprintAssignable, Category = "GASP Plugin | Widget Controller | Delegates")
-	FOnMaxManaChangedSignature OnMaxManaChanged;
-
-	UPROPERTY(BlueprintAssignable, Category = "GASP Plugin | Widget Controller | Delegates")
-	FOnStaminaChangedSignature OnStaminaChanged;
-
-	UPROPERTY(BlueprintAssignable, Category = "GASP Plugin | Widget Controller | Delegates")
-	FOnMaxStaminaChangedSignature OnMaxStaminaChanged;
-
-protected:
 	
-	/** Callback when Health attribute changes */
-	void HealthChanged(const FOnAttributeChangeData& Data) const;
-
-	/** Callback when MaxHealth attribute changes */
-	void MaxHealthChanged(const FOnAttributeChangeData& Data) const;
-
-	/** Callback when Health attribute changes */
-	void ManaChanged(const FOnAttributeChangeData& Data) const;
-
-	/** Callback when MaxHealth attribute changes */
-	void MaxManaChanged(const FOnAttributeChangeData& Data) const;
 };

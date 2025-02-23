@@ -4,6 +4,7 @@
 #include "UI/WidgetController/GASPWidgetController.h"
 
 #include "AbilitySystem/GASPAbilitySystemComponent.h"
+#include "AbilitySystem/GASPAttributeSet.h"
 
 void UGASPWidgetController::SetWidgetControllerData(const FGASPWidgetControllerData& InWidgetControllerData)
 {
@@ -15,10 +16,27 @@ void UGASPWidgetController::SetWidgetControllerData(const FGASPWidgetControllerD
 
 void UGASPWidgetController::BroadcastInitialValues()
 {
+	ensureMsgf(AttributeSet, TEXT("AttributeSet is nullptr in Main Overlay Widget Controller -> BroadcastInitialValues"));
+	const UGASPAttributeSet* GASPAttributeSet = Cast<UGASPAttributeSet>(AttributeSet);
+
+	// Broadcast the initial health value.
+	OnHealthChanged.Broadcast(GASPAttributeSet->GetHealth());
+	// Broadcast the initial max health value.
+	OnMaxHealthChanged.Broadcast(GASPAttributeSet->GetMaxHealth());
+
+	// Broadcast the initial mana value.
+	OnManaChanged.Broadcast(GASPAttributeSet->GetMana());
+	// Broadcast the initial max mana value.
+	OnMaxManaChanged.Broadcast(GASPAttributeSet->GetMaxMana());
+
+	// Broadcast the initial stamina value.
+	OnStaminaChanged.Broadcast(GASPAttributeSet->GetStamina());
+	// Broadcast the initial max stamina value.
+	OnMaxStaminaChanged.Broadcast(GASPAttributeSet->GetMaxStamina());
 	
 }
 
-void UGASPWidgetController::RegisterAttributeChangeCallbacks()
+void UGASPWidgetController::BindAndBroadcastAttributeByFloatChangeDelegate(const FGameplayAttribute& InAttribute, const FOnAttributeByFloatChangedSignature& InOnAttributeByFloatChangedDelegate)
 {
 	/*
 	 * What is AddLambda?
@@ -45,6 +63,40 @@ void UGASPWidgetController::RegisterAttributeChangeCallbacks()
 	 * Now we can capture variables, we can capture things by reference, we can capture things by pointer.
 	 * So if you want to call a member function in a lambda, you have to capture that object of the class that that function belongs to.
 	 */
+	
+	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(InAttribute)
+	.AddLambda([&InOnAttributeByFloatChangedDelegate](const FOnAttributeChangeData& Data)
+		{
+			InOnAttributeByFloatChangedDelegate.Broadcast(Data.NewValue);
+		}
+	);
+}
+
+void UGASPWidgetController::RegisterAttributeChangeCallbacks()
+{
+	ensureMsgf(AttributeSet, TEXT("AttributeSet is nullptr in Main Overlay Widget Controller -> BroadcastInitialValues"));
+	if (!AttributeSet)
+	{
+		UE_LOG(LogTemp, Error, TEXT("AttributeSet is nullptr in UGASPWidgetController::RegisterAttributeChangeCallbacks"));
+		return;
+	}
+	
+	const UGASPAttributeSet* GASPAttributeSet = Cast<UGASPAttributeSet>(AttributeSet);
+
+	// Health
+	BindAndBroadcastAttributeByFloatChangeDelegate(GASPAttributeSet->GetHealthAttribute(), OnHealthChanged);
+	// Max Health
+	BindAndBroadcastAttributeByFloatChangeDelegate(GASPAttributeSet->GetMaxHealthAttribute(), OnMaxHealthChanged);
+	// Mana
+	BindAndBroadcastAttributeByFloatChangeDelegate(GASPAttributeSet->GetManaAttribute(), OnManaChanged);
+	// Max Mana
+	BindAndBroadcastAttributeByFloatChangeDelegate(GASPAttributeSet->GetMaxManaAttribute(), OnMaxManaChanged);
+	// Stamina
+	BindAndBroadcastAttributeByFloatChangeDelegate(GASPAttributeSet->GetStaminaAttribute(), OnStaminaChanged);
+	// Max Stamina
+	BindAndBroadcastAttributeByFloatChangeDelegate(GASPAttributeSet->GetMaxStaminaAttribute(), OnMaxStaminaChanged);
+
+	
 	Cast<UGASPAbilitySystemComponent>(AbilitySystemComponent)->GameplayEffectAssetTags.AddLambda(
 	[this](const FGameplayTagContainer& AssetTags)
 	{
@@ -60,7 +112,7 @@ void UGASPWidgetController::RegisterAttributeChangeCallbacks()
 			if (GameplayTag.MatchesTag(MessageTag))
 			{
 				ensureMsgf(MessageWidgetDataTable, TEXT("MessageWidgetDataTable is not set!"));
-				if (MessageWidgetDataTable)
+				if (IsValid(MessageWidgetDataTable))
 				{
 					const FUIMessageWidgetRow* Row = GetDataTableRowByTag<FUIMessageWidgetRow>(MessageWidgetDataTable, GameplayTag);
 					MessageWidgetRowDelegate.Broadcast(*Row);
